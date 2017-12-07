@@ -1,0 +1,37 @@
+div.container {
+    width: 100%;
+}
+
+header, footer {
+    padding: 1em;
+    color: white;
+    background-color: black;
+    clear: left;
+    text-align: left;
+    height: 15%;
+}
+
+
+div.menubar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333333;
+}
+
+div.menubar li {
+    float: left;
+}
+
+div.menubar li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 16px;
+    text-decoration: none;
+}
+
+div.menubar li a:hover {
+    background-color: #111111;
+}
