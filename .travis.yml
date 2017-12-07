@@ -1,0 +1,17 @@
+sudo: required
+
+language: node_js
+
+services:
+  - docker
+
+before_install:
+- docker build -t ciui .
+- docker run -d --name app ciui
+- docker ps -a
+
+script:
+- docker exec app npm test
+
+after_script:
+- docker rm -f app
