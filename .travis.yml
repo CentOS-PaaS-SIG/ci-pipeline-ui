@@ -1,8 +1,6 @@
 sudo: required
-
 language: node_js
 node_js:
-  - "iojs"
   - "node"
 
 services:
@@ -11,11 +9,10 @@ services:
 before_install:
 - ls
 - docker build -t ciui .
-- docker run -it -p 8080:8080 --name app ciui
+- docker run -d -p 8080:8080 --name app ciui
 - docker ps -a
 
 script:
-- docker exec app npm start
 - docker exec app npm test
 
 after_script:
