@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
 class MenuBar extends Component {
   render(){
@@ -15,5 +14,4 @@ class MenuBar extends Component {
     );
   }
 }
-
-export default connect(null)(MenuBar);
+export default MenuBar;

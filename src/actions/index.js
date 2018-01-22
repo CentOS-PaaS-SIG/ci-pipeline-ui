@@ -1,8 +1,12 @@
-export function selectBook(book){
-  console.log('A book has been selected ', book.title);
-  // action always contains type and payload
-  return {
-    type: 'BOOK_SELECTED',
-    payload: book
-  };
+export const FETCH_PIPELINES = 'fetch_pipelines';
+import axios from 'axios';
+const ROOT_URL = 'http://localhost:3000';
+const API_KEY = "?key=iParpe12345";
+
+export function fetchPipelines() {
+	const request = axios.get(`${ROOT_URL}/pipelines`)
+	return {
+		type: FETCH_PIPELINES,
+		payload: request
+	};
 }
