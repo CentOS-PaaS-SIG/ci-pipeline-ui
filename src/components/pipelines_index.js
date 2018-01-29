@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { fetchPipelines } from '../actions';
 
 class PipelinesIndex extends Component {
@@ -8,13 +9,15 @@ class PipelinesIndex extends Component {
   this.props.fetchPipelines();
   }
   renderPipelines(){
-	return _.map(this.props.pipelines, pipeline => {
-		return (
-			<li className="list-group-item" key={pipeline.id}>
-				{pipeline.name}
-			</li>
-		);
-	});
+    return _.map(this.props.pipelines, pipeline => {
+      return (
+        <li className="list-group-item" key={pipeline.name}>
+          <Link to={`/pipelines/${pipeline.name}`}>
+            {pipeline.name}
+          </Link>
+      </li>
+      );
+    });
   }
   render(){
     console.log(this.props.pipelines);

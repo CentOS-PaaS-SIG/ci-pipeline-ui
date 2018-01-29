@@ -1,0 +1,29 @@
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { fetchPipeline } from '../actions';
+
+class PipelinesShow extends Component {
+  componentDidMount(){
+    const { id } = this.props.match.params.id;
+    this.props.fetchPost(id);
+  }
+  if (!pipeline){
+  return <div> Loading </div>;
+  }
+  render(){
+    const { pipeline } = this.props;
+    return(
+      <div>
+        Pipeline Show
+        <h3> {pipeline.name} </h3>
+      </div>
+    );
+  }
+
+}
+
+function mapStateToProps({ pipelines }, ownProps ){
+  return { pipeline: pipelines[ownProps.match.params.id] };
+}
+
+export default connect(mapStateToProps, { fetchPipeline } )(PipelinesShow);
