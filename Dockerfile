@@ -7,13 +7,9 @@ LABEL RUN='docker run -d -p 8080:8080 $IMAGE'
 # Install nodejs and npm
 RUN dnf -y update && dnf -y install npm && dnf clean all
 
-# Show nodejs and npm versions installed
-RUN node -v
-RUN npm -v
-
 # Set port for nodejs to listen on and expose it
 ENV PORT 8080
-EXPOSE 8080
+EXPOSE 8080 3000
 
 # Set production environment for nodejs application
 ENV PATH=/src/node_modules/.bin/:$PATH
