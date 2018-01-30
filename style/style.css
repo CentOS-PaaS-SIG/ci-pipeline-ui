@@ -1,3 +1,12 @@
+.container {
+    max-width:  100%;
+    min-width:  100%;
+    padding-left:  0px;
+    padding-right: 0px;
+    margin-left: 0px;
+    margin-right:  0px;
+}
+
 div.container {
     width: 100%;
 }
@@ -10,7 +19,6 @@ header, footer {
     text-align: left;
     height: 15%;
 }
-
 
 div.menubar ul {
     list-style-type: none;
