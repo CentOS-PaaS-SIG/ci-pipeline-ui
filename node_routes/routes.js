@@ -6,12 +6,10 @@ function getPipelines(url){
 }
 
 function getPipelineDetails(name){
-  console.log(name);
   return axios.get('https://jenkins-continuous-infra.apps.ci.centos.org/blue/rest/organizations/jenkins/pipelines/'+name, { responseType: 'json' });
 }
 
 function getPipelineRuns(name){
-  console.log(name);
   return axios.get('https://jenkins-continuous-infra.apps.ci.centos.org/blue/rest/organizations/jenkins/pipelines/'+name+'/runs/', { responseType: 'json' });
 }
 
@@ -21,21 +19,15 @@ var appRouter = function (app) {
   });
 
   app.get("/pipelines/:id/runs", function(req, res) {
-    console.log("Id is ");
-    console.log(req.params.id);
     var promiseObj = getPipelineRuns(req.params.id);
     promiseObj.then(function(data){
-      console.log(data['data']);
       res.status(200).send(data['data']);
     });
   });
 
   app.get("/pipelines/:id", function(req, res) {
-    console.log("Id is ");
-    console.log(req.params.id);
     var promiseObj = getPipelineDetails(req.params.id);
     promiseObj.then(function(data){
-      console.log(data['data']);
       res.status(200).send(data['data']);
     });
   });
@@ -48,8 +40,6 @@ var appRouter = function (app) {
       for (index in data["data"]){
         var dict = {};
         dict["id"] = i;
-        console.log("Data found #####################");
-        console.log(data["data"][index]);
         dict["name"] = data["data"][index]["displayName"];
         dict["weatherScore"] = data["data"][index]["weatherScore"];
         names.push(dict);

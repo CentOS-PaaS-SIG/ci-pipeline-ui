@@ -5,9 +5,7 @@ import { fetchPipelineRuns }  from '../actions';
 
 class PipelineRuns extends Component {
   componentDidMount() {
-    console.log(this.props.match.params.id);
     const id = this.props.match.params.id;
-    console.log(id);
     this.props.fetchPipelineRuns(id);
   }
   renderPipelineRuns(){
@@ -20,10 +18,7 @@ class PipelineRuns extends Component {
     })
   }
   render(){
-    console.log("Inside render")
-    console.log(this.props);
     const { pipelines } = this.props;
-    console.log(pipelines);
     if (!pipelines){
       return (
         <div>
@@ -32,8 +27,6 @@ class PipelineRuns extends Component {
       )
     }
     else{
-      console.log("inside else");
-      console.log(pipelines);
       return (
         <div>
   		    {this.renderPipelineRuns()}
@@ -52,11 +45,7 @@ class PipelineRuns extends Component {
 
 
 function mapStateToProps({ pipelines }, ownProps){
-  console.log(ownProps);
-  console.log("data inside pipelines")
-
   return { pipelines };
-
 }
 
 export default connect(mapStateToProps, { fetchPipelineRuns })(PipelineRuns);
