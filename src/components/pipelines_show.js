@@ -11,7 +11,6 @@ class PipelinesShow extends Component {
     this.props.fetchPipeline(id);
   }
   render(){
-    console.log("inside render")
     console.log(this.props);
     const { pipeline } = this.props;
     if (!pipeline){

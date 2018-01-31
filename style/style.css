@@ -43,3 +43,27 @@ div.menubar li a {
 div.menubar li a:hover {
     background-color: #111111;
 }
+
+
+div.pipelineindex ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+div.pipelineindex li {
+    float: left;
+}
+
+div.pipelineindex li a {
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 16px;
+    text-decoration: none;
+}
+
+div.menubar li a:hover {
+    background-color: #111111;
+}

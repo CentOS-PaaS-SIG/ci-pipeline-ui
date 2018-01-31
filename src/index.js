@@ -10,6 +10,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Header from './components/header';
 import Footer from './components/footer';
 import MenuBar from './components/menubar';
+import PipelineMain from './components/pipeline_main';
 import PipelinesIndex from './components/pipelines_index';
 import About from './components/about';
 import PipelinesShow from './components/pipelines_show';
@@ -24,7 +25,7 @@ ReactDOM.render(
         <Switch>
 	  <Route path="/pipelines/:id" component={PipelinesShow} />
 	  <Route path="/about" component={About} />
-	  <Route path="/" component={PipelinesIndex} />
+	  <Route path="/" component={PipelineMain} />
         </Switch>
 	<Footer />
 	</div>
