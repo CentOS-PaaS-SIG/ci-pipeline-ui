@@ -13,6 +13,7 @@ class PipelineMain extends Component {
               <th>weatherScore</th>
               <th>Details</th>
               <th>LatestRun</th>
+              <th>AllRuns</th>
             </tr>
           </thead>
           <PipelinesIndex>

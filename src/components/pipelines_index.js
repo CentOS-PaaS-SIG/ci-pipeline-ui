@@ -39,6 +39,13 @@ class PipelinesIndex extends Component {
                 Latest run
               </button>
           </td>
+          <td>
+              <button type="button" className="btn btn-default">
+                <Link to={`/pipelines/${pipeline.name}/runs`}>
+                  All Runs
+                </Link>
+              </button>
+          </td>
         </tr>
     );
     });

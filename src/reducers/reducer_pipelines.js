@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import { FETCH_PIPELINES } from '../actions';
 import { FETCH_PIPELINE } from '../actions';
+import { FETCH_PIPELINE_RUNS } from '../actions';
 
 export default function(state = {}, action){
   switch (action.type){
@@ -10,6 +11,10 @@ export default function(state = {}, action){
     case FETCH_PIPELINE:
       // console.log(action.payload.data);
       return { ...state, [action.payload.data.name]: action.payload.data }
+    case FETCH_PIPELINE_RUNS:
+        console.log("Inside reducer");
+        console.log(action.payload.data);
+        return { ...state, "pipelineruns": action.payload.data }
     default:
       return state;
   }

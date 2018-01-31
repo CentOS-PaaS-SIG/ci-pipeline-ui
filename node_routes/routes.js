@@ -10,11 +10,25 @@ function getPipelineDetails(name){
   return axios.get('https://jenkins-continuous-infra.apps.ci.centos.org/blue/rest/organizations/jenkins/pipelines/'+name, { responseType: 'json' });
 }
 
+function getPipelineRuns(name){
+  console.log(name);
+  return axios.get('https://jenkins-continuous-infra.apps.ci.centos.org/blue/rest/organizations/jenkins/pipelines/'+name+'/runs/', { responseType: 'json' });
+}
+
 var appRouter = function (app) {
   app.get("/", function(req, res) {
-    res.status(200).send("Welcome to our restful API");
+    res.status(200).send("Welcome to our ci-pipeline restful API");
   });
 
+  app.get("/pipelines/:id/runs", function(req, res) {
+    console.log("Id is ");
+    console.log(req.params.id);
+    var promiseObj = getPipelineRuns(req.params.id);
+    promiseObj.then(function(data){
+      console.log(data['data']);
+      res.status(200).send(data['data']);
+    });
+  });
 
   app.get("/pipelines/:id", function(req, res) {
     console.log("Id is ");
