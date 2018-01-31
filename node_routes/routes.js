@@ -34,8 +34,11 @@ var appRouter = function (app) {
       for (index in data["data"]){
         var dict = {};
         dict["id"] = i;
+        console.log("Data found #####################");
+        console.log(data["data"][index]);
         dict["name"] = data["data"][index]["displayName"];
-	names.push(dict);
+        dict["weatherScore"] = data["data"][index]["weatherScore"];
+        names.push(dict);
         i = i+1;
       }
       res.status(200).send(names);

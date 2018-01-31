@@ -10,6 +10,7 @@ class PipelineMain extends Component {
             <tr>
               <th>#</th>
               <th>Name</th>
+              <th>weatherScore</th>
               <th>Details</th>
               <th>LatestRun</th>
             </tr>

@@ -23,6 +23,11 @@ class PipelinesIndex extends Component {
               </Link>
           </td>
           <td>
+              <Link to="">
+                {pipeline.weatherScore}
+              </Link>
+          </td>
+          <td>
               <button type="button" className="btn btn-default">
                 <Link to={`/pipelines/${pipeline.name}`}>
                   Details
@@ -47,7 +52,6 @@ class PipelinesIndex extends Component {
   }
 }
 
-//export default PipelineList;
 function mapStateToProps(state){
   return {pipelines: state.pipelines};
 }
