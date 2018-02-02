@@ -51,11 +51,26 @@ class PipelinesIndex extends Component {
     });
   }
   render(){
+    if(!this.props.pipelines){
+      return(
+      <tbody>
+        <tr>
+        <td>
+          <h3> Loading ... </h3>
+          <img src="/static/loading.gif" alt="Smiley face" height="42" width="42">
+          </img>
+        </td>
+      </tr>
+      </tbody>
+      );
+    }
+    else{
     return (
       <tbody>
 		    {this.renderPipelines()}
       </tbody>
     );
+    }
   }
 }
 

@@ -19,10 +19,12 @@ class PipelineRuns extends Component {
   }
   render(){
     const { pipelines } = this.props;
-    if (!pipelines){
+    if (Object.keys(pipelines).length == 0){
       return (
         <div>
-          Pipeline Runs
+          <h3> Loading ... </h3>
+          <img src="/static/loading.gif" alt="Smiley face" height="42" width="42">
+          </img>
         </div>
       )
     }
@@ -32,13 +34,6 @@ class PipelineRuns extends Component {
   		    {this.renderPipelineRuns()}
         </div>
       );
-
-
-      //return (
-      //  <div>
-    //      <h4> Name of pipeline:  </ h4>
-    //    </div>
-    //  )
     }
   }
 }

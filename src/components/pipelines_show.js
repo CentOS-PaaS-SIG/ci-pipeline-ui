@@ -12,7 +12,9 @@ class PipelinesShow extends Component {
     if (!pipeline){
       return (
         <div>
-          Posts Show!
+          Loading ...
+          <img src="/static/loading.gif" alt="Smiley face" height="42" width="42">
+          </img>
         </div>
       )
     }
