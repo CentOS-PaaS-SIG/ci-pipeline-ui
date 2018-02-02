@@ -11,14 +11,31 @@ class PipelineRuns extends Component {
   renderPipelineRuns(){
     return _.map(this.props.pipelines.pipelineruns, pipelinerun => {
       return (
-        <div key={pipelinerun.id}>
-        <h4> PipelineRunId: {pipelinerun.id} </h4>
-        </div>
+        <tr key={pipelinerun.id}>
+          <td>
+            {pipelinerun.id}
+          </td>
+          <td>
+            {pipelinerun.name}
+          </td>
+          <td>
+            {pipelinerun.result}
+          </td>
+          <td>
+            <button className="btn primary">
+              Artifacts
+            </button>
+            <button className="btn primary">
+              Nodes
+            </button>
+          </td>
+        </tr>
       )
     })
   }
   render(){
     const { pipelines } = this.props;
+    console.log(pipelines);
     if (Object.keys(pipelines).length == 0){
       return (
         <div>
@@ -30,8 +47,20 @@ class PipelineRuns extends Component {
     }
     else{
       return (
-        <div>
-  		    {this.renderPipelineRuns()}
+        <div className="table-responsive">
+          <table className="table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Operations</th>
+              </tr>
+            </thead>
+            <tbody>
+            {this.renderPipelineRuns()}
+          </tbody>
+          </table>
         </div>
       );
     }
