@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchPipeline }  from '../actions';
+import { Link } from 'react-router-dom';
 
 class PipelinesShow extends Component {
   componentDidMount() {
@@ -9,6 +10,7 @@ class PipelinesShow extends Component {
   }
   render(){
     const { pipeline } = this.props;
+    var jenkins_url = "https://jenkins-continuous-infra.apps.ci.centos.org";
     if (!pipeline){
       return (
         <div>
@@ -19,10 +21,13 @@ class PipelinesShow extends Component {
       )
     }
     else{
+      console.log(pipeline);
+      var url = `${jenkins_url}${ pipeline.latestRun.artifactsZipFile }`
       return (
         <div>
           <h4> Name of pipeline:  { pipeline.displayName } </ h4>
-          <h4> State: { pipeline.organization } </ h4>
+          <h4> WeatherScore: { pipeline.weatherScore } </ h4>
+          <h4> Latest run Artifacts : <a href={ url }> Download </a></h4>
         </div>
       )
     }
