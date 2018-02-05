@@ -28,21 +28,28 @@ class PipelinesIndex extends Component {
               </Link>
           </td>
           <td>
-              <button type="button" className="btn btn-default">
+              <button type="button" className="btn btn-default btn-sm">
                 <Link to={`/pipelines/${pipeline.name}`}>
                   Details
                 </Link>
               </button>
           </td>
           <td>
-              <button type="button" className="btn btn-default">
+              <button type="button" className="btn btn-default btn-sm">
                 Latest run
               </button>
           </td>
           <td>
-              <button type="button" className="btn btn-default">
+              <button type="button" className="btn btn-default btn-sm">
                 <Link to={`/pipelines/${pipeline.name}/runs`}>
                   All Runs
+                </Link>
+              </button>
+          </td>
+          <td>
+              <button type="button" className="btn btn-default btn-sm">
+                <Link to={`/pipelines/${pipeline.name}/runs`}>
+                  Run View
                 </Link>
               </button>
           </td>

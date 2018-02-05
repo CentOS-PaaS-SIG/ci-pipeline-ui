@@ -14,6 +14,7 @@ class PipelineMain extends Component {
               <th>Details</th>
               <th>LatestRun</th>
               <th>AllRuns</th>
+              <th>Run View</th>
             </tr>
           </thead>
           <PipelinesIndex>

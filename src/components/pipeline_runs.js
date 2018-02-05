@@ -22,10 +22,10 @@ class PipelineRuns extends Component {
             {pipelinerun.result}
           </td>
           <td>
-            <button className="btn primary">
+            <button className="btn btn-default btn-sm">
               Artifacts
             </button>
-            <button className="btn primary">
+            <button className="btn btn-default btn-sm">
               Nodes
             </button>
           </td>
