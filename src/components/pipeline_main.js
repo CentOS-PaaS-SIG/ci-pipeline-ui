@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PipelinesIndex from './pipelines_index';
+import { Table } from 'reactstrap';
 class PipelineMain extends Component {
   render(){
     return (
-      <div className="table-responsive">
-        <table className="table">
+        <Table hover>
           <thead>
             <tr>
               <th>#</th>
@@ -19,8 +19,7 @@ class PipelineMain extends Component {
           </thead>
           <PipelinesIndex>
           </PipelinesIndex>
-        </table>
-      </div>
+        </Table>
     );
   }
 }

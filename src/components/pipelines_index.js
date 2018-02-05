@@ -11,16 +11,12 @@ class PipelinesIndex extends Component {
   renderPipelines(){
     return _.map(this.props.pipelines, pipeline => {
       return (
-        <tr className="pipelineindex" key={`${pipeline.id}`}>
-          <td>
-              <Link to="">
+        <tr key={`${pipeline.id}`}>
+          <td scope="row">
                 {pipeline.id}
-              </Link>
           </td>
           <td>
-              <Link to={`/pipelines/${pipeline.name}`}>
                 {pipeline.name}
-              </Link>
           </td>
           <td>
               <Link to="">
