@@ -48,7 +48,7 @@ class PipelinesIndex extends Component {
           </td>
           <td>
               <button type="button" className="btn btn-default btn-sm">
-                <Link to={`/pipelines/${pipeline.name}/runs`}>
+                <Link to={`/pipelines/${pipeline.name}/runview`}>
                   Run View
                 </Link>
               </button>
