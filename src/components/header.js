@@ -5,7 +5,7 @@ class Header extends Component {
 
     return (
       <header>
-        <h1>CI-UI</h1>
+        <h1>CI-PIPELINE-UI</h1>
       </header>
     );
   }
