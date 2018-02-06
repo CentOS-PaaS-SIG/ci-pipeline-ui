@@ -2,6 +2,8 @@ export const FETCH_PIPELINES = 'fetch_pipelines';
 export const FETCH_PIPELINE = 'fetch_pipeline';
 export const FETCH_PIPELINE_RUNS = 'fetch_pipeline_runs';
 export const FETCH_PIPELINE_RUN = 'fetch_pipeline_run';
+export const FETCH_PIPELINE_RUNVIEW = 'fetch_pipeline_runview';
+
 import axios from 'axios';
 const ROOT_URL = 'http://localhost:3000';
 
@@ -36,6 +38,14 @@ export function fetchPipelineRun(id, runId) {
         const request = axios.get(`${ROOT_URL}/pipelines/${id}/${runId}`)
         return {
                 type: FETCH_PIPELINE_RUN,
+                payload: request
+        };
+}
+
+export function fetchPipelineRunview(id) {
+        const request = axios.get(`${ROOT_URL}/pipelines/${id}/runview`)
+        return {
+                type: FETCH_PIPELINE_RUNVIEW,
                 payload: request
         };
 }
