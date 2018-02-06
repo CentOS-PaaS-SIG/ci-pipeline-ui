@@ -73,8 +73,10 @@ var appRouter = function (app) {
     }).then((response) => {
       axios.all(run_data["node_promises"]).then(function(values) {
         console.log(values);
+        console.log("Inside node promises ###");
+        res.status(200).send(response);
       });
-      res.status(200).send(response);
+
     });
   });
 
