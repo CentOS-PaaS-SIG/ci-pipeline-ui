@@ -29,6 +29,11 @@ function getPipelineRunNodes(name, runid){
   return axios.get(ROOT_URL+name+'/runs/'+runid+'/nodes/', { responseType: 'json' });
 }
 
+function getPipelineLatestRun(name, runid){
+  console.log(ROOT_URL+name+'/latestRun/');
+  return axios.get(ROOT_URL+name+'/latestRun/', { responseType: 'json' });
+}
+
 var appRouter = function (app) {
   app.get("/", function(req, res) {
     res.status(200).send("Welcome to our ci-pipeline restful API");
@@ -87,6 +92,13 @@ var appRouter = function (app) {
     });
   });
 
+  app.get("/pipelines/:id/latestRun", function(req, res) {
+    var promiseObj = getPipelineLatestRun(req.params.id);
+    promiseObj.then(function(data){
+      res.status(200).send(data['data']);
+    });
+  });
+
   app.get("/pipelines/:id", function(req, res) {
     var promiseObj = getPipelineDetails(req.params.id);
     promiseObj.then(function(data){
@@ -104,6 +116,12 @@ var appRouter = function (app) {
         dict["id"] = i;
         dict["name"] = data["data"][index]["displayName"];
         dict["weatherScore"] = data["data"][index]["weatherScore"];
+        if (data["data"][index]["latestRun"]){
+          dict["latestRun"] = data["data"][index]["latestRun"]
+        }
+        else{
+          dict["latestRun"] = {};
+        }
         names.push(dict);
         i = i+1;
       }
