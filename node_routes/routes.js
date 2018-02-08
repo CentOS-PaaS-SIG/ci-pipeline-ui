@@ -92,7 +92,7 @@ var appRouter = function (app) {
     });
   });
 
-  app.get("/pipelines/:id/latestRun", function(req, res) {
+  app.get("/pipelines/:id/latestrun", function(req, res) {
     var promiseObj = getPipelineLatestRun(req.params.id);
     promiseObj.then(function(data){
       res.status(200).send(data['data']);

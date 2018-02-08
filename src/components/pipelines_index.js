@@ -32,7 +32,9 @@ class PipelinesIndex extends Component {
           </td>
           <td>
               <button type="button" className="btn btn-default btn-sm">
-                Latest run
+                <Link to={`/pipelines/${pipeline.name}/latestrun`}>
+                  Latest run
+                </Link>
               </button>
           </td>
           <td>
