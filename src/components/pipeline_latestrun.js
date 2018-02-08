@@ -7,13 +7,30 @@ class PipelineLatestrun extends Component {
   componentDidMount() {
     const id = this.props.match.params.id;
     this.props.fetchPipelineLatestrun(id);
+
   }
+
   render(){
+    console.log(this.props.pipelines);
+    if(Object.keys(this.props.pipelines).length ==0){
+      return(
+        <div>
+          <h3> Loading ... </h3>
+          <img src="/static/loading.gif" alt="Smiley face" height="42" width="42">
+          </img>
+        </div>
+      );
+    }
+    else{
+      console.log("inside render else");
+      console.log(this.props.pipelines.pipelinelatestrun);
     return(
       <div>
         <h3> Pipeline latest run details </h3>
+        {this.props.pipelines.pipelinelatestrun.name}
       </div>
     );
+  }
   }
 }
 
