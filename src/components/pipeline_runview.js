@@ -9,6 +9,7 @@ class PipelineRunview extends Component {
     this.props.fetchPipelineRunview(id);
   }
   renderRunview(){
+    
     return (
       <tbody>
         <tr>

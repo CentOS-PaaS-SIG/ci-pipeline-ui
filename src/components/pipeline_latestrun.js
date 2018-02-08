@@ -15,13 +15,15 @@ class PipelineLatestrun extends Component {
       console.log(plr);
       return (
         <div key={plr.id}>
-          <h5> Name: {plr.name}</h5>
+          <h5> id: {plr.id}</h5>
+          <h5> Name: {plr.id}</h5>
+          <h5> Result: {plr.result}</h5>
+
         </div>
       )
 
     })
   }
-
   render(){
     console.log(this.props.pipelines);
     if(Object.keys(this.props.pipelines).length ==0){

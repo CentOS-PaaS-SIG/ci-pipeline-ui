@@ -73,12 +73,35 @@ var appRouter = function (app) {
         return_data.push(append_dict);
       }
       console.log(run_data);
+      axios.all(run_data["node_promises"]).then(function(results) {
+        let temp = results.map(r => r.data);
+        console.log(temp);
+        run_data["node_results"] = temp;
+      });
       return return_data;
 
     }).then((response) => {
       axios.all(run_data["node_promises"]).then(function(values) {
-        console.log(values);
+        console.log(values["data"]);
         console.log("Inside node promises ###");
+        console.log(run_data["node_results"]);
+        //console.log("end of node results ####")
+        var i = 0;
+        for (i=0;i<values.length;i++){
+          response[i]["nodes"] = values[i]["data"];
+        }
+        /*
+        values.forEach(function(resp) {
+         console.log("#########");
+         console.log(resp["data"]);
+         console.log("#########");
+        })
+        */
+        console.log(values.length);
+        //console.log("length of node_results");
+        //console.log(response.length);
+        //console.log("length of return_data");
+        //console.log(run_data["node_results"].length);
         res.status(200).send(response);
       });
 
