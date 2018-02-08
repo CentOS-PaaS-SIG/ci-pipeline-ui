@@ -10,6 +10,18 @@ class PipelineLatestrun extends Component {
 
   }
 
+  renderLatestRun(){
+    return _.map(this.props.pipelines.pipelinelatestrun, plr => {
+      console.log(plr);
+      return (
+        <div key={plr.id}>
+          <h5> Name: {plr.name}</h5>
+        </div>
+      )
+
+    })
+  }
+
   render(){
     console.log(this.props.pipelines);
     if(Object.keys(this.props.pipelines).length ==0){
@@ -24,12 +36,18 @@ class PipelineLatestrun extends Component {
     else{
       console.log("inside render else");
       console.log(this.props.pipelines.pipelinelatestrun);
-    return(
+      return(
+        <div>
+          {this.renderLatestRun()}
+        </div>
+      );
+  /*  return(
       <div>
         <h3> Pipeline latest run details </h3>
         {this.props.pipelines.pipelinelatestrun.name}
       </div>
     );
+    */
   }
   }
 }

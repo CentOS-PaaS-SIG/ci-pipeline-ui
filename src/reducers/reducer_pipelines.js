@@ -21,7 +21,7 @@ export default function(state = {}, action){
     case FETCH_PIPELINE_LATESTRUN:
         console.log("Inside the reducer pipeline latestrun:");
         console.log(action.payload.data);
-        return { ...state, "pipelinelatestrun": action.payload.data }
+        return { ...state, "pipelinelatestrun": [action.payload.data] }
     default:
       return state;
   }
