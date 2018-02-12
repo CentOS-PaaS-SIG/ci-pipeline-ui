@@ -7,12 +7,8 @@ class PipelineRunview extends Component {
   componentDidMount() {
     const id = this.props.match.params.id;
     this.props.fetchPipelineRunview(id);
-    console.log("inside component did mount runview");
-    console.log(this.props);
   }
   renderRunNodes(nodes){
-    console.log("Inside run nodes ");
-    console.log("printing out each node");
     return _.map(nodes, node  => {
       console.log(node);
       return(
@@ -23,7 +19,6 @@ class PipelineRunview extends Component {
                 <h5><b>{node.displayName}</b></h5>
                 <h5><b>{node.result}</b></h5>
                 <h5><b>{node.state}</b></h5>
-                <button className="btn"> clickme </button>
               </div>
             </div>
           </div>
@@ -32,9 +27,8 @@ class PipelineRunview extends Component {
     });
   }
   renderRunview(){
-    console.log("inside renderrunview runview");
-    console.log(this.props);
     return _.map(this.props.pipelines.pipelinerunview, (pipelinerunview, index) => {
+      console.log(pipelinerunview);
       return (
           <tr key={pipelinerunview.runid}>
             <td>

@@ -60,8 +60,7 @@ var appRouter = function (app) {
     run_data["node_results"] = []
     var return_data = []
     promiseObj.then(function(data){
-      ;
-      console.log("Start of console : runview")
+      console.log("Start of console : runview");
       //console.log(data);
       for (run_index in data['data']){
         var append_dict = {}
@@ -69,6 +68,8 @@ var appRouter = function (app) {
         append_dict["runid"]= data['data'][run_index]['id'];
         append_dict["pipeline"]= data['data'][run_index]['pipeline'];
         append_dict["durationInMillis"]= data['data'][run_index]['durationInMillis'];
+        append_dict["logs"]= data['data'][run_index]['durationInMillis'];
+        append_dict["artifacts"]= data['data'][run_index]['durationInMillis'];
         run_data["node_promises"].push(getPipelineRunNodes(append_dict["pipeline"], append_dict["runid"]));
         return_data.push(append_dict);
       }
@@ -82,26 +83,11 @@ var appRouter = function (app) {
 
     }).then((response) => {
       axios.all(run_data["node_promises"]).then(function(values) {
-        console.log(values["data"]);
-        console.log("Inside node promises ###");
-        console.log(run_data["node_results"]);
         //console.log("end of node results ####")
         var i = 0;
         for (i=0;i<values.length;i++){
           response[i]["nodes"] = values[i]["data"];
         }
-        /*
-        values.forEach(function(resp) {
-         console.log("#########");
-         console.log(resp["data"]);
-         console.log("#########");
-        })
-        */
-        console.log(values.length);
-        //console.log("length of node_results");
-        //console.log(response.length);
-        //console.log("length of return_data");
-        //console.log(run_data["node_results"].length);
         res.status(200).send(response);
       });
 
