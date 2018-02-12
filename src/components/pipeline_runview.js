@@ -10,6 +10,25 @@ class PipelineRunview extends Component {
     console.log("inside component did mount runview");
     console.log(this.props);
   }
+  renderRunNodes(nodes){
+    console.log("Inside run nodes ");
+    console.log("printing out each node");
+    return _.map(nodes, node  => {
+      console.log(node);
+      return(
+        <td>
+          <div className="fleft">
+            <div className="card">
+              <div className="cardcontainer">
+                <h4><b>Step1</b></h4>
+                <button className="btn"> clickme </button>
+              </div>
+            </div>
+          </div>
+        </td>
+      )
+    });
+  }
   renderRunview(){
     console.log("inside renderrunview runview");
     console.log(this.props);
@@ -17,27 +36,12 @@ class PipelineRunview extends Component {
       return (
           <tr key={pipelinerunview.runid}>
             <td>
-              {index}
+              {pipelinerunview.runid}
             </td>
             <td>
               {pipelinerunview.name}
             </td>
-            <td>
-              <div className="fleft">
-                <div className="card">
-                  <div className="cardcontainer">
-                    <h4><b>Step1</b></h4>
-                    <button className="btn"> clickme </button>
-                  </div>
-                </div>
-              <div className="card ">
-                <div className="cardcontainer">
-                  <h4><b>Step2  : hello there ......</b></h4>
-                  <button className="btn"> clickme </button>
-                  </div>
-                </div>
-              </div>
-            </td>
+            {this.renderRunNodes(pipelinerunview.nodes)}
           </tr>
       )
     })
@@ -56,6 +60,24 @@ class PipelineRunview extends Component {
   }
 
 }
+
+/*<td>
+  <div className="fleft">
+    <div className="card">
+      <div className="cardcontainer">
+        <h4><b>Step1</b></h4>
+        <button className="btn"> clickme </button>
+      </div>
+    </div>
+  <div className="card ">
+    <div className="cardcontainer">
+      <h4><b>Step2  : hello there ......</b></h4>
+      <button className="btn"> clickme </button>
+      </div>
+    </div>
+  </div>
+</td>
+*/
 
 //export default PipelineRunview;
 
