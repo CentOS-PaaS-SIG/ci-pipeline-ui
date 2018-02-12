@@ -7,58 +7,51 @@ class PipelineRunview extends Component {
   componentDidMount() {
     const id = this.props.match.params.id;
     this.props.fetchPipelineRunview(id);
+    console.log("inside component did mount runview");
+    console.log(this.props);
   }
   renderRunview(){
-    
-    return (
-      <tbody>
-        <tr>
-          <td>
-            <div className="fleft">
-              <div className="card">
+    console.log("inside renderrunview runview");
+    console.log(this.props);
+    return _.map(this.props.pipelines.pipelinerunview, (pipelinerunview, index) => {
+      return (
+          <tr key={pipelinerunview.runid}>
+            <td>
+              {index}
+            </td>
+            <td>
+              {pipelinerunview.name}
+            </td>
+            <td>
+              <div className="fleft">
+                <div className="card">
+                  <div className="cardcontainer">
+                    <h4><b>Step1</b></h4>
+                    <button className="btn"> clickme </button>
+                  </div>
+                </div>
+              <div className="card ">
                 <div className="cardcontainer">
-                  <h4><b>Step1</b></h4>
+                  <h4><b>Step2  : hello there ......</b></h4>
                   <button className="btn"> clickme </button>
+                  </div>
                 </div>
               </div>
-            <div className="card ">
-              <div className="cardcontainer">
-                <h4><b>Step2  : hello there ......</b></h4>
-                <button className="btn"> clickme </button>
-                </div>
-              </div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div className="fleft">
-              <div className="card">
-                <div className="cardcontainer">
-                  <h4><b>Step1</b></h4>
-                  <button className="btn"> clickme </button>
-                </div>
-              </div>
-            <div className="card ">
-              <div className="cardcontainer">
-                <h4><b>Step2  : hello there ......</b></h4>
-                <button className="btn"> clickme </button>
-                </div>
-              </div>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    );
+            </td>
+          </tr>
+      )
+    })
   }
   render(){
-    console.log("Inside the component runview");
-    console.log(this.props);
     return(
-      <table>
-      {this.renderRunview()}
-    </table>
-
+      <div>
+        <h3> Runview: </h3>
+        <table>
+          <tbody>
+            {this.renderRunview()}
+          </tbody>
+        </table>
+      </div>
     );
   }
 
