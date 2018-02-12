@@ -20,7 +20,9 @@ class PipelineRunview extends Component {
           <div className="fleft">
             <div className="card">
               <div className="cardcontainer">
-                <h4><b>Step1</b></h4>
+                <h5><b>{node.displayName}</b></h5>
+                <h5><b>{node.result}</b></h5>
+                <h5><b>{node.state}</b></h5>
                 <button className="btn"> clickme </button>
               </div>
             </div>
