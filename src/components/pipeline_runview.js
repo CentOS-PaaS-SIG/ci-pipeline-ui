@@ -11,6 +11,7 @@ class PipelineRunview extends Component {
   renderRunNodes(nodes){
     return _.map(nodes, node  => {
       console.log(node);
+      if (node.result && node.state){
       return(
           <div className="flex-item">
             <div className="card">
@@ -23,6 +24,7 @@ class PipelineRunview extends Component {
             </div>
           </div>
       )
+    }
     });
   }
   renderRunview(){

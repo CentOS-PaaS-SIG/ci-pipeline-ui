@@ -60,6 +60,7 @@ div.fleft div {
     /* Add shadows to create the "card" effect */
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
+    padding:
 }
 
 /* On mouse-over, add a deeper shadow */
@@ -77,4 +78,13 @@ div.fleft div {
 }
 .flex-container{
     display:flex;
+    padding: 2px;
+}
+
+td {
+  padding: 4px;
+}
+
+table {
+  width: 100%;
 }
