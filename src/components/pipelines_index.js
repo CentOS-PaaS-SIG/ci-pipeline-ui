@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { fetchPipelines } from '../actions';
 
 class PipelinesIndex extends Component {
-  componentDidMount() {
+  componentWillMount() {
   this.props.fetchPipelines();
   }
   renderPipelines(){

@@ -4,7 +4,7 @@ import { fetchPipelineRuns }  from '../actions';
 
 
 class PipelineRuns extends Component {
-  componentDidMount() {
+  componentWillMount() {
     const id = this.props.match.params.id;
     this.props.fetchPipelineRuns(id);
   }

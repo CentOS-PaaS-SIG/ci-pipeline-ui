@@ -4,7 +4,7 @@ import { fetchPipelineRunview }  from '../actions';
 
 
 class PipelineRunview extends Component {
-  componentDidMount() {
+  componentWillMount() {
     const id = this.props.match.params.id;
     this.props.fetchPipelineRunview(id);
   }

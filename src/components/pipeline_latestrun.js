@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { fetchPipelineLatestrun } from '../actions';
 
 class PipelineLatestrun extends Component {
-  componentDidMount() {
+  componentWillMount() {
     const id = this.props.match.params.id;
     this.props.fetchPipelineLatestrun(id);
 

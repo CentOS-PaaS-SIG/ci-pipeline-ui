@@ -4,7 +4,7 @@ import { fetchPipeline }  from '../actions';
 import { Link } from 'react-router-dom';
 
 class PipelinesShow extends Component {
-  componentDidMount() {
+  componentWillMount() {
     const id = this.props.match.params.id;
     this.props.fetchPipeline(id);
   }
