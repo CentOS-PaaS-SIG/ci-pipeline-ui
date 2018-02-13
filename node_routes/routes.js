@@ -1,6 +1,5 @@
 var axios = require('axios')
 const util = require('util');
-const sentry = require('raven');
 
 const ROOT_URL = "https://jenkins-continuous-infra.apps.ci.centos.org/blue/rest/organizations/jenkins/pipelines/";
 const JENKINS_URL = "https://jenkins-continuous-infra.apps.ci.centos.org";
@@ -25,12 +24,12 @@ function getPipelineRunByID(name, runid){
 }
 
 function getPipelineRunNodes(name, runid){
-  console.log(ROOT_URL+name+'/runs/'+runid+'/nodes/');
+  //console.log(ROOT_URL+name+'/runs/'+runid+'/nodes/');
   return axios.get(ROOT_URL+name+'/runs/'+runid+'/nodes/', { responseType: 'json' });
 }
 
 function getPipelineLatestRun(name, runid){
-  console.log(ROOT_URL+name+'/latestRun/');
+  //console.log(ROOT_URL+name+'/latestRun/');
   return axios.get(ROOT_URL+name+'/latestRun/', { responseType: 'json' });
 }
 
@@ -60,7 +59,7 @@ var appRouter = function (app) {
     run_data["node_results"] = []
     var return_data = []
     promiseObj.then(function(data){
-      console.log("Start of console : runview");
+      //console.log("Start of console : runview");
       //console.log(data);
       for (run_index in data['data']){
         var append_dict = {}
@@ -73,10 +72,10 @@ var appRouter = function (app) {
         run_data["node_promises"].push(getPipelineRunNodes(append_dict["pipeline"], append_dict["runid"]));
         return_data.push(append_dict);
       }
-      console.log(run_data);
+      //console.log(run_data);
       axios.all(run_data["node_promises"]).then(function(results) {
         let temp = results.map(r => r.data);
-        console.log(temp);
+        //console.log(temp);
         run_data["node_results"] = temp;
       });
       return return_data;

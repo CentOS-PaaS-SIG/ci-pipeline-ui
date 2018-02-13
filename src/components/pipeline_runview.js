@@ -13,7 +13,7 @@ class PipelineRunview extends Component {
       console.log(node);
       if (node.result && node.state){
       return(
-          <div className="flex-item">
+          <div className="flex-item" key={node.id}>
             <div className="card">
               <h6><b>{node.displayName}</b></h6>
               <div className="cardcontainer">
