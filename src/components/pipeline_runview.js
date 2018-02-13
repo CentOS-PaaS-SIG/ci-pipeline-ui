@@ -12,17 +12,16 @@ class PipelineRunview extends Component {
     return _.map(nodes, node  => {
       console.log(node);
       return(
-        <td>
-          <div className="fleft">
+          <div className="flex-item">
             <div className="card">
+              <h6><b>{node.displayName}</b></h6>
               <div className="cardcontainer">
-                <h5><b>{node.displayName}</b></h5>
-                <h5><b>{node.result}</b></h5>
-                <h5><b>{node.state}</b></h5>
+                <span className="label label-default" >{node.result}</span>
+                <br></br>
+                <span className="label label-default" >{node.state}</span>
               </div>
             </div>
           </div>
-        </td>
       )
     });
   }
@@ -37,7 +36,11 @@ class PipelineRunview extends Component {
             <td>
               {pipelinerunview.name}
             </td>
+            <td>
+              <div className="flex-container">
             {this.renderRunNodes(pipelinerunview.nodes)}
+          </div>
+          </td>
           </tr>
       )
     })
@@ -46,100 +49,26 @@ class PipelineRunview extends Component {
     return(
       <div>
         <h3> Runview: </h3>
-        <table>
-          <tbody>
-            {this.renderRunview()}
-          </tbody>
-        </table>
-      </div>
+        <div className="table-responsive">
+          <table className="table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Steps</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.renderRunview()}
+            </tbody>
+          </table>
+        </div>
+    </div>
     );
   }
 
 }
 
-/*<td>
-  <div className="fleft">
-    <div className="card">
-      <div className="cardcontainer">
-        <h4><b>Step1</b></h4>
-        <button className="btn"> clickme </button>
-      </div>
-    </div>
-  <div className="card ">
-    <div className="cardcontainer">
-      <h4><b>Step2  : hello there ......</b></h4>
-      <button className="btn"> clickme </button>
-      </div>
-    </div>
-  </div>
-</td>
-*/
-
-//export default PipelineRunview;
-
-/*
-class PipelineRuns extends Component {
-
-  renderPipelineRuns(){
-    return _.map(this.props.pipelines.pipelineruns, pipelinerun => {
-      return (
-        <tr key={pipelinerun.id}>
-          <td>
-            {pipelinerun.id}
-          </td>
-          <td>
-            {pipelinerun.name}
-          </td>
-          <td>
-            {pipelinerun.result}
-          </td>
-          <td>
-            <button className="btn btn-default btn-sm">
-              Artifacts
-            </button>
-            <button className="btn btn-default btn-sm">
-              Nodes
-            </button>
-          </td>
-        </tr>
-      )
-    })
-  }
-  render(){
-    const { pipelines } = this.props;
-    console.log(pipelines);
-    if (Object.keys(pipelines).length == 0){
-      return (
-        <div>
-          <h3> Loading ... </h3>
-          <img src="/static/loading.gif" alt="Smiley face" height="42" width="42">
-          </img>
-        </div>
-      )
-    }
-    else{
-      return (
-        <div className="table-responsive">
-          <table className="table">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>Status</th>
-                <th>Operations</th>
-              </tr>
-            </thead>
-            <tbody>
-            {this.renderPipelineRuns()}
-          </tbody>
-          </table>
-        </div>
-      );
-    }
-  }
-}
-
-*/
 function mapStateToProps({ pipelines }, ownProps){
   return { pipelines };
 }

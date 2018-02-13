@@ -71,3 +71,10 @@ div.fleft div {
 .cardcontainer {
     padding: 2px 16px;
 }
+
+.flex-item{
+    flex-grow: 1;
+}
+.flex-container{
+    display:flex;
+}
