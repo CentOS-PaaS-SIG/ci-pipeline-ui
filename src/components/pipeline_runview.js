@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { fetchPipelineRunview }  from '../actions';
-
+const JENKINS_URL = "https://jenkins-continuous-infra.apps.ci.centos.org";
 
 class PipelineRunview extends Component {
   componentWillMount() {
     const id = this.props.match.params.id;
+    const ARTIFACTS_URL = "/job/ci-pipeline-linchpin/50/artifact/*zip*/archive.zip"
     this.props.fetchPipelineRunview(id);
   }
   renderRunNodes(nodes){
@@ -30,13 +32,22 @@ class PipelineRunview extends Component {
   renderRunview(){
     return _.map(this.props.pipelines.pipelinerunview, (pipelinerunview, index) => {
       console.log(pipelinerunview);
+      var artifactsURL = `${JENKINS_URL}/job/${pipelinerunview.pipeline}/${pipelinerunview.runid}/artifact/*zip*/archive.zip`
+      console.log(artifactsURL);
+      if (pipelinerunview.name){
       return (
           <tr key={pipelinerunview.runid}>
             <td>
-              {pipelinerunview.runid}
+              <b>{pipelinerunview.runid}</b>
             </td>
             <td>
-              {pipelinerunview.name}
+              <b> {pipelinerunview.name} </b>
+              <br></br>
+              <button type="button" className="btn btn-default btn-sm">
+              <a href={`${artifactsURL}`}>
+                 Artifacts Zip
+              </a>
+              </button>
             </td>
             <td>
               <div className="flex-container">
@@ -45,6 +56,7 @@ class PipelineRunview extends Component {
           </td>
           </tr>
       )
+    }
     })
   }
   render(){
@@ -68,7 +80,6 @@ class PipelineRunview extends Component {
     </div>
     );
   }
-
 }
 
 function mapStateToProps({ pipelines }, ownProps){
