@@ -13,43 +13,43 @@ class PipelinesIndex extends Component {
       return (
         <tr key={`${pipeline.id}`}>
           <td scope="row">
-                {pipeline.id}
+            {pipeline.id}
           </td>
           <td>
-                {pipeline.name}
+            {pipeline.name}
           </td>
           <td>
-              <Link to="">
-                {pipeline.weatherScore}
+            <Link to="">
+              {pipeline.weatherScore}
+            </Link>
+          </td>
+          <td>
+            <button type="button" className="btn btn-default btn-sm">
+              <Link to={`/pipelines/${pipeline.name}`}>
+                Details
               </Link>
+            </button>
           </td>
           <td>
-              <button type="button" className="btn btn-default btn-sm">
-                <Link to={`/pipelines/${pipeline.name}`}>
-                  Details
-                </Link>
-              </button>
+            <button type="button" className="btn btn-default btn-sm">
+              <Link to={`/pipelines/${pipeline.name}/latestrun`}>
+                Latest run
+              </Link>
+            </button>
           </td>
           <td>
-              <button type="button" className="btn btn-default btn-sm">
-                <Link to={`/pipelines/${pipeline.name}/latestrun`}>
-                  Latest run
-                </Link>
-              </button>
+            <button type="button" className="btn btn-default btn-sm">
+              <Link to={`/pipelines/${pipeline.name}/runs`}>
+                All Runs
+              </Link>
+            </button>
           </td>
           <td>
-              <button type="button" className="btn btn-default btn-sm">
-                <Link to={`/pipelines/${pipeline.name}/runs`}>
-                  All Runs
-                </Link>
-              </button>
-          </td>
-          <td>
-              <button type="button" className="btn btn-default btn-sm">
-                <Link to={`/pipelines/${pipeline.name}/runview`}>
-                  Run View
-                </Link>
-              </button>
+            <button type="button" className="btn btn-default btn-sm">
+              <Link to={`/pipelines/${pipeline.name}/runview`}>
+                Run View
+              </Link>
+            </button>
           </td>
         </tr>
     );

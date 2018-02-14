@@ -1,15 +1,36 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import ReactDOM from 'react-dom';
+import ReactModal from 'react-modal';
 import { Link } from 'react-router-dom';
 import { fetchPipelineRunview }  from '../actions';
 const JENKINS_URL = "https://jenkins-continuous-infra.apps.ci.centos.org";
 
+
 class PipelineRunview extends Component {
+  constructor () {
+    super();
+    this.state = {
+      showModal: false
+    };
+
+    this.handleOpenModal = this.handleOpenModal.bind(this);
+    this.handleCloseModal = this.handleCloseModal.bind(this);
+  }
+
+  handleOpenModal () {
+    this.setState({ showModal: true });
+  }
+
+  handleCloseModal () {
+    this.setState({ showModal: false });
+  }
+
   componentWillMount() {
     const id = this.props.match.params.id;
-    const ARTIFACTS_URL = "/job/ci-pipeline-linchpin/50/artifact/*zip*/archive.zip"
     this.props.fetchPipelineRunview(id);
   }
+
   renderRunNodes(nodes){
     return _.map(nodes, node  => {
       console.log(node);
@@ -30,11 +51,13 @@ class PipelineRunview extends Component {
     });
   }
   renderRunview(){
+    const { open } = this.state;
     return _.map(this.props.pipelines.pipelinerunview, (pipelinerunview, index) => {
       console.log(pipelinerunview);
       var artifactsURL = `${JENKINS_URL}/job/${pipelinerunview.pipeline}/${pipelinerunview.runid}/artifact/*zip*/archive.zip`
       console.log(artifactsURL);
       if (pipelinerunview.name){
+          /*  convert the following modalbox into a component */
       return (
           <tr key={pipelinerunview.runid}>
             <td>
@@ -43,17 +66,25 @@ class PipelineRunview extends Component {
             <td>
               <b> {pipelinerunview.name} </b>
               <br></br>
-              <button type="button" className="btn btn-default btn-sm">
+              <button className="btn btn-default btn-sm">
               <a href={`${artifactsURL}`}>
                  Artifacts Zip
               </a>
               </button>
+              <div>
+                <button className="btn btn-default btn-sm" onClick={this.handleOpenModal}>Files</button>
+                <ReactModal isOpen={this.state.showModal}
+                            contentLabel="Minimal Modal Example"
+                            ariaHideApp={false}>
+                <button onClick={this.handleCloseModal}>Close Modal</button>
+                </ReactModal>
+              </div>
             </td>
             <td>
               <div className="flex-container">
-            {this.renderRunNodes(pipelinerunview.nodes)}
-          </div>
-          </td>
+                {this.renderRunNodes(pipelinerunview.nodes)}
+              </div>
+            </td>
           </tr>
       )
     }
