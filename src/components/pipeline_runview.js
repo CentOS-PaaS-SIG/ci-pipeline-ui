@@ -32,7 +32,7 @@ class PipelineRunview extends Component {
     const id = this.props.match.params.id;
     this.props.fetchPipelineRunview(id);
   }
-
+  /* Note: make nodes as components */
   renderRunNodes(nodes){
     return _.map(nodes, node  => {
       console.log(node);
@@ -74,7 +74,7 @@ class PipelineRunview extends Component {
                  Artifacts Zip
               </a>
               </button>
-              <ArtifactsModal>
+              <ArtifactsModal runid={`${pipelinerunview.runid}`} pipelinename={`${pipelinerunview.pipeline}`} >
               </ArtifactsModal>
 
             </td>

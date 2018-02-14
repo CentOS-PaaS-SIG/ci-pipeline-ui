@@ -23,6 +23,7 @@ class ArtifactsModal extends Component {
   }
 
   render(){
+    console.log(this.props);
     return (
       <div>
         <button className="btn btn-default btn-sm" onClick={this.handleOpenModal}>Files</button>
