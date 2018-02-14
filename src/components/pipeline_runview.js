@@ -4,16 +4,18 @@ import ReactDOM from 'react-dom';
 import ReactModal from 'react-modal';
 import { Link } from 'react-router-dom';
 import { fetchPipelineRunview }  from '../actions';
+import ArtifactsModal from './artifacts_modal';
+
 const JENKINS_URL = "https://jenkins-continuous-infra.apps.ci.centos.org";
 
 
 class PipelineRunview extends Component {
+
   constructor () {
     super();
     this.state = {
       showModal: false
     };
-
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
   }
@@ -35,21 +37,22 @@ class PipelineRunview extends Component {
     return _.map(nodes, node  => {
       console.log(node);
       if (node.result && node.state){
-      return(
+        return(
           <div className="flex-item" key={node.id}>
             <div className="card">
               <h6><b>{node.displayName}</b></h6>
               <div className="cardcontainer">
                 <span className="label label-default" >{node.result}</span>
-                <br></br>
+                  <br></br>
                 <span className="label label-default" >{node.state}</span>
               </div>
             </div>
           </div>
-      )
-    }
+        )
+      }
     });
   }
+
   renderRunview(){
     const { open } = this.state;
     return _.map(this.props.pipelines.pipelinerunview, (pipelinerunview, index) => {
@@ -71,14 +74,9 @@ class PipelineRunview extends Component {
                  Artifacts Zip
               </a>
               </button>
-              <div>
-                <button className="btn btn-default btn-sm" onClick={this.handleOpenModal}>Files</button>
-                <ReactModal isOpen={this.state.showModal}
-                            contentLabel="Minimal Modal Example"
-                            ariaHideApp={false}>
-                <button onClick={this.handleCloseModal}>Close Modal</button>
-                </ReactModal>
-              </div>
+              <ArtifactsModal>
+              </ArtifactsModal>
+
             </td>
             <td>
               <div className="flex-container">

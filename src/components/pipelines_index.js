@@ -5,9 +5,11 @@ import { Link } from 'react-router-dom';
 import { fetchPipelines } from '../actions';
 
 class PipelinesIndex extends Component {
+
   componentWillMount() {
-  this.props.fetchPipelines();
+    this.props.fetchPipelines();
   }
+
   renderPipelines(){
     return _.map(this.props.pipelines, pipeline => {
       return (
@@ -55,26 +57,27 @@ class PipelinesIndex extends Component {
     );
     });
   }
+
   render(){
     if(!this.props.pipelines){
       return(
-      <tbody>
-        <tr>
-        <td>
-          <h3> Loading ... </h3>
-          <img src="/static/loading.gif" alt="Smiley face" height="42" width="42">
-          </img>
-        </td>
-      </tr>
-      </tbody>
+        <tbody>
+          <tr>
+            <td>
+              <h3> Loading ... </h3>
+              <img src="/static/loading.gif" alt="Smiley face" height="42" width="42">
+              </img>
+            </td>
+          </tr>
+        </tbody>
       );
     }
     else{
-    return (
-      <tbody>
-		    {this.renderPipelines()}
-      </tbody>
-    );
+      return (
+        <tbody>
+		      {this.renderPipelines()}
+        </tbody>
+      );
     }
   }
 }
@@ -82,6 +85,5 @@ class PipelinesIndex extends Component {
 function mapStateToProps(state){
   return {pipelines: state.pipelines};
 }
-
 
 export default connect(mapStateToProps, { fetchPipelines } )(PipelinesIndex);
