@@ -33,9 +33,21 @@ function getPipelineLatestRun(name, runid){
   return axios.get(ROOT_URL+name+'/latestRun/', { responseType: 'json' });
 }
 
+function getPipelineRunArtifacts(name, runid){
+  //console.log(ROOT_URL+name+'/runs/'+runid+'/artifacts/');
+  return axios.get(ROOT_URL+name+'/runs/'+runid+'/artifacts/', { responseType: 'json' });
+}
+
 var appRouter = function (app) {
   app.get("/", function(req, res) {
     res.status(200).send("Welcome to our ci-pipeline restful API");
+  });
+
+  app.get("/pipelines/:id/runs/:runid/artifacts", function(req, res) {
+    var promiseObj = getPipelineRunArtifacts(req.params.id, req.params.runid);
+    promiseObj.then(function(data){
+      res.status(200).send(data['data']);
+    });
   });
 
   app.get("/pipelines/:id/runs/:runid/nodes", function(req, res) {
