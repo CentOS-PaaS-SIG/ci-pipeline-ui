@@ -4,6 +4,7 @@ export const FETCH_PIPELINE_RUNS = 'fetch_pipeline_runs';
 export const FETCH_PIPELINE_RUN = 'fetch_pipeline_run';
 export const FETCH_PIPELINE_RUNVIEW = 'fetch_pipeline_runview';
 export const FETCH_PIPELINE_LATESTRUN = 'fetch_pipeline_latestrun';
+export const FETCH_PIPELINE_RUN_ARTIFACTS = 'fetch_pipeline_run_artifacts'
 var CONFIG = require("../constants/config")
 import axios from 'axios';
 
@@ -55,6 +56,14 @@ export function fetchPipelineLatestrun(id) {
         const request = axios.get(`${CONFIG.CUSTOM_REST_URL}/pipelines/${id}/latestrun`)
         return {
                 type: FETCH_PIPELINE_LATESTRUN,
+                payload: request
+        };
+}
+
+export function fetchPipelineRunArtifacts(id, runId) {
+        const request = axios.get(`${CONFIG.CUSTOM_REST_URL}/pipelines/${id}/runs/${runId}/artifacts`)
+        return {
+                type: FETCH_PIPELINE_RUN_ARTIFACTS,
                 payload: request
         };
 }
