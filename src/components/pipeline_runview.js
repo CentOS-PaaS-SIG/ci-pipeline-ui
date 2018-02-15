@@ -5,8 +5,7 @@ import ReactModal from 'react-modal';
 import { Link } from 'react-router-dom';
 import { fetchPipelineRunview }  from '../actions';
 import ArtifactsModal from './artifacts_modal';
-
-const JENKINS_URL = "https://jenkins-continuous-infra.apps.ci.centos.org";
+var CONFIG = require("../constants/config")
 
 
 class PipelineRunview extends Component {
@@ -57,7 +56,7 @@ class PipelineRunview extends Component {
     const { open } = this.state;
     return _.map(this.props.pipelines.pipelinerunview, (pipelinerunview, index) => {
       console.log(pipelinerunview);
-      var artifactsURL = `${JENKINS_URL}/job/${pipelinerunview.pipeline}/${pipelinerunview.runid}/artifact/*zip*/archive.zip`
+      var artifactsURL = `${CONFIG.JENKINS_BASE_URL}/job/${pipelinerunview.pipeline}/${pipelinerunview.runid}/artifact/*zip*/archive.zip`
       console.log(artifactsURL);
       if (pipelinerunview.name){
           /*  convert the following modalbox into a component */

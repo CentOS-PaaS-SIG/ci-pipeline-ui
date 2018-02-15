@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchPipeline }  from '../actions';
 import { Link } from 'react-router-dom';
+var CONFIG = require("../constants/config")
 
 class PipelinesShow extends Component {
   componentWillMount() {
@@ -10,7 +11,6 @@ class PipelinesShow extends Component {
   }
   render(){
     const { pipeline } = this.props;
-    var jenkins_url = "https://jenkins-continuous-infra.apps.ci.centos.org";
     if (!pipeline){
       return (
         <div>
@@ -22,7 +22,7 @@ class PipelinesShow extends Component {
     }
     else{
       console.log(pipeline);
-      var url = `${jenkins_url}${ pipeline.latestRun.artifactsZipFile }`
+      var url = `${CONFIG.JENKINS_BASE_URL}${ pipeline.latestRun.artifactsZipFile }`
       return (
         <div>
           <h4> Name of pipeline:  { pipeline.displayName } </ h4>
