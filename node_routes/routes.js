@@ -3,39 +3,51 @@ const util = require('util');
 
 const ROOT_URL = "https://jenkins-continuous-infra.apps.ci.centos.org/blue/rest/organizations/jenkins/pipelines/";
 const JENKINS_URL = "https://jenkins-continuous-infra.apps.ci.centos.org";
-function getPipelines(url){
-  return axios.get(ROOT_URL, { responseType: 'json' });
+
+function formatReturnData(rqurl, promise){
+  var returnData = {};
+  returnData["url"] = rqurl;
+  returnData["promise"] = promise;
+  return returnData;
+}
+
+function getPipelines(){
+  return formatReturnData(ROOT_URL, axios.get(ROOT_URL, { responseType: 'json' }));
 }
 
 function getPipelineDetails(name){
-  return axios.get(ROOT_URL+name, { responseType: 'json' });
+  var REQ_URL = ROOT_URL+name;
+  return formatReturnData(REQ_URL, axios.get(REQ_URL, { responseType: 'json' }));
 }
 
 function getPipelineRuns(name){
-  return axios.get(ROOT_URL+name+'/runs/', { responseType: 'json' });
+  var REQ_URL = ROOT_URL+name+'/runs/';
+  return formatReturnData(REQ_URL, axios.get(REQ_URL, { responseType: 'json' }));
 }
 
 function getPipelineRunview(name){
-  return axios.get(ROOT_URL+name+'/runs/', { responseType: 'json' });
+  var REQ_URL = ROOT_URL+name+'/runs/';
+  return formatReturnData(REQ_URL, axios.get(REQ_URL, { responseType: 'json' }));
 }
 
 function getPipelineRunByID(name, runid){
-  return axios.get(ROOT_URL+name+'/runs/'+runid, { responseType: 'json' });
+  var REQ_URL = ROOT_URL+name+'/runs/'+runid;
+  return formatReturnData(REQ_URL, axios.get(REQ_URL, { responseType: 'json' }));
 }
 
 function getPipelineRunNodes(name, runid){
-  //console.log(ROOT_URL+name+'/runs/'+runid+'/nodes/');
-  return axios.get(ROOT_URL+name+'/runs/'+runid+'/nodes/', { responseType: 'json' });
+  var REQ_URL = ROOT_URL+name+'/runs/'+runid+'/nodes/';
+  return formatReturnData(REQ_URL, axios.get(REQ_URL, { responseType: 'json' }));
 }
 
 function getPipelineLatestRun(name, runid){
-  //console.log(ROOT_URL+name+'/latestRun/');
-  return axios.get(ROOT_URL+name+'/latestRun/', { responseType: 'json' });
+  var REQ_URL = ROOT_URL+name+'/latestRun/';
+  return formatReturnData(REQ_URL, axios.get(REQ_URL, { responseType: 'json' }));
 }
 
 function getPipelineRunArtifacts(name, runid){
-  //console.log(ROOT_URL+name+'/runs/'+runid+'/artifacts/');
-  return axios.get(ROOT_URL+name+'/runs/'+runid+'/artifacts/', { responseType: 'json' });
+  var REQ_URL = ROOT_URL+name+'/runs/'+runid+'/artifacts/';
+  return formatReturnData(REQ_URL, axios.get(REQ_URL, { responseType: 'json' }));
 }
 
 var appRouter = function (app) {
@@ -44,33 +56,33 @@ var appRouter = function (app) {
   });
 
   app.get("/pipelines/:id/runs/:runid/artifacts", function(req, res) {
-    var promiseObj = getPipelineRunArtifacts(req.params.id, req.params.runid);
-    promiseObj.then(function(data){
+    var returnData = getPipelineRunArtifacts(req.params.id, req.params.runid);
+    returnData["promise"].then(function(data){
       res.status(200).send(data['data']);
     });
   });
 
   app.get("/pipelines/:id/runs/:runid/nodes", function(req, res) {
-    var promiseObj = getPipelineRunNodes(req.params.id, req.params.runid);
-    promiseObj.then(function(data){
+    var returnData = getPipelineRunNodes(req.params.id, req.params.runid);
+    returnData["promise"].then(function(data){
       res.status(200).send(data['data']);
     });
   });
 
   app.get("/pipelines/:id/runs/:runid", function(req, res) {
-    var promiseObj = getPipelineRunByID(req.params.id, req.params.runid);
-    promiseObj.then(function(data){
+    var returnData = getPipelineRunByID(req.params.id, req.params.runid);
+    returnData["promise"].then(function(data){
       res.status(200).send(data['data']);
     });
   });
 
   app.get("/pipelines/:id/runview", function(req, res) {
-    var promiseObj = getPipelineRunview(req.params.id);
+    var returnData = getPipelineRunview(req.params.id);
     run_data = {}
     run_data["node_promises"] = []
     run_data["node_results"] = []
     var return_data = []
-    promiseObj.then(function(data){
+    returnData["promise"].then(function(data){
       //console.log("Start of console : runview");
       //console.log(data);
       for (run_index in data['data']){
@@ -81,7 +93,7 @@ var appRouter = function (app) {
         append_dict["durationInMillis"]= data['data'][run_index]['durationInMillis'];
         append_dict["logs"]= data['data'][run_index]['durationInMillis'];
         append_dict["artifacts"]= data['data'][run_index]['durationInMillis'];
-        run_data["node_promises"].push(getPipelineRunNodes(append_dict["pipeline"], append_dict["runid"]));
+        run_data["node_promises"].push(getPipelineRunNodes(append_dict["pipeline"], append_dict["runid"])["promise"]);
         return_data.push(append_dict);
       }
       //console.log(run_data);
@@ -106,29 +118,29 @@ var appRouter = function (app) {
   });
 
   app.get("/pipelines/:id/runs", function(req, res) {
-    var promiseObj = getPipelineRuns(req.params.id);
-    promiseObj.then(function(data){
+    var returnData = getPipelineRuns(req.params.id);
+    returnData["promise"].then(function(data){
       res.status(200).send(data['data']);
     });
   });
 
   app.get("/pipelines/:id/latestrun", function(req, res) {
-    var promiseObj = getPipelineLatestRun(req.params.id);
-    promiseObj.then(function(data){
+    var returnData = getPipelineLatestRun(req.params.id);
+    returnData["promise"].then(function(data){
       res.status(200).send(data['data']);
     });
   });
 
   app.get("/pipelines/:id", function(req, res) {
-    var promiseObj = getPipelineDetails(req.params.id);
-    promiseObj.then(function(data){
+    var returnData = getPipelineDetails(req.params.id);
+    returnData["promise"].then(function(data){
       res.status(200).send(data['data']);
     });
   });
 
   app.get("/pipelines", function(req, res) {
-    var promiseObj = getPipelines('test');
-    promiseObj.then(function(data){
+    var returnData = getPipelines();
+    returnData["promise"].then(function(data){
       var names = [];
       var i = 1;
       for (index in data["data"]){
@@ -148,7 +160,6 @@ var appRouter = function (app) {
       res.status(200).send(names);
     });
   });
-
 }
 
 module.exports = appRouter;

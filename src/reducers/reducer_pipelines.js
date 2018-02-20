@@ -24,13 +24,14 @@ export default function(state = {}, action){
       //console.log(action.payload.data);
       return { ...state, "pipelinelatestrun": [action.payload.data] }
     case FETCH_PIPELINE_RUN_ARTIFACTS:
-      console.log("Inside the reducer fetch pipelinerun artifacts:");
       console.log(action.payload.data);
       if (!("runartifacts" in state )){
         state["runartifacts"] = {};
       }
       if (action.payload.data.length != 0 ){
         // fetch the id from first element
+        console.log("This is where split happens");
+        console.log(action.payload.data[0])
         var pipelineName = action.payload.data[0].url.split("/")[2];
         var pipelineRunID = action.payload.data[0].url.split("/")[3];
         // append it as rest of keys
