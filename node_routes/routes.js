@@ -1,8 +1,30 @@
 var axios = require('axios')
 const util = require('util');
+const NodeCache = require('node-cache');
+const myCache = new NodeCache( { stdTTL: 100, checkperiod: 120 } );
 
 const ROOT_URL = "https://jenkins-continuous-infra.apps.ci.centos.org/blue/rest/organizations/jenkins/pipelines/";
 const JENKINS_URL = "https://jenkins-continuous-infra.apps.ci.centos.org";
+
+myCache.on( "del", function( key, value ){
+  console.log("delete function called");
+});
+
+function setCacheData(url, data){
+  var status = myCache.set( url , data, 10000);
+  return status;
+}
+
+function getCachedData(url){
+  try{
+    value = myCache.get(url, true);
+    return value;
+  }
+  catch( err ){
+    console.log(err);
+    return false;
+  }
+}
 
 function formatReturnData(rqurl, promise){
   var returnData = {};
@@ -52,10 +74,15 @@ function getPipelineRunArtifacts(name, runid){
 
 var appRouter = function (app) {
   app.get("/", function(req, res) {
+    console.log("url details");
+    console.log(req.headers.host+req.url);
     res.status(200).send("Welcome to our ci-pipeline restful API");
   });
 
   app.get("/pipelines/:id/runs/:runid/artifacts", function(req, res) {
+    console.log("url details");
+    console.log(req.headers.host+req.url);
+    var request_url = req.headers.host+req.url;
     var returnData = getPipelineRunArtifacts(req.params.id, req.params.runid);
     returnData["promise"].then(function(data){
       res.status(200).send(data['data']);
@@ -63,6 +90,9 @@ var appRouter = function (app) {
   });
 
   app.get("/pipelines/:id/runs/:runid/nodes", function(req, res) {
+    console.log("url details");
+    console.log(req.headers.host+req.url);
+    var request_url = req.headers.host+req.url;
     var returnData = getPipelineRunNodes(req.params.id, req.params.runid);
     returnData["promise"].then(function(data){
       res.status(200).send(data['data']);
@@ -70,6 +100,9 @@ var appRouter = function (app) {
   });
 
   app.get("/pipelines/:id/runs/:runid", function(req, res) {
+    console.log("url details");
+    console.log(req.headers.host+req.url);
+    var request_url = req.headers.host+req.url;
     var returnData = getPipelineRunByID(req.params.id, req.params.runid);
     returnData["promise"].then(function(data){
       res.status(200).send(data['data']);
@@ -77,6 +110,9 @@ var appRouter = function (app) {
   });
 
   app.get("/pipelines/:id/runview", function(req, res) {
+    console.log("url details");
+    console.log(req.headers.host+req.url);
+    var request_url = req.headers.host+req.url;
     var returnData = getPipelineRunview(req.params.id);
     run_data = {}
     run_data["node_promises"] = []
@@ -118,6 +154,9 @@ var appRouter = function (app) {
   });
 
   app.get("/pipelines/:id/runs", function(req, res) {
+    console.log("url details");
+    console.log(req.headers.host+req.url);
+    var request_url = req.headers.host+req.url;
     var returnData = getPipelineRuns(req.params.id);
     returnData["promise"].then(function(data){
       res.status(200).send(data['data']);
@@ -125,6 +164,9 @@ var appRouter = function (app) {
   });
 
   app.get("/pipelines/:id/latestrun", function(req, res) {
+    console.log("url details");
+    console.log(req.headers.host+req.url);
+    var request_url = req.headers.host+req.url;
     var returnData = getPipelineLatestRun(req.params.id);
     returnData["promise"].then(function(data){
       res.status(200).send(data['data']);
@@ -132,6 +174,9 @@ var appRouter = function (app) {
   });
 
   app.get("/pipelines/:id", function(req, res) {
+    console.log("url details");
+    console.log(req.headers.host+req.url);
+    var request_url = req.headers.host+req.url;
     var returnData = getPipelineDetails(req.params.id);
     returnData["promise"].then(function(data){
       res.status(200).send(data['data']);
@@ -139,6 +184,9 @@ var appRouter = function (app) {
   });
 
   app.get("/pipelines", function(req, res) {
+    console.log("url details");
+    console.log(req.headers.host+req.url);
+    var request_url = req.headers.host+req.url;
     var returnData = getPipelines();
     returnData["promise"].then(function(data){
       var names = [];

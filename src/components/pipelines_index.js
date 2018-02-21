@@ -12,6 +12,7 @@ class PipelinesIndex extends Component {
 
   renderPipelines(){
     return _.map(this.props.pipelines, pipeline => {
+      if (pipeline.id){
       return (
         <tr key={`${pipeline.id}`}>
           <td scope="row">
@@ -55,6 +56,7 @@ class PipelinesIndex extends Component {
           </td>
         </tr>
     );
+  }
     });
   }
 
