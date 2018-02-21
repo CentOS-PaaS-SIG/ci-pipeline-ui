@@ -14,6 +14,7 @@ class ArtifactsModal extends Component {
     };
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
+    this.JENKINS_URL= "https://jenkins-continuous-infra.apps.ci.centos.org"
   }
 
   componentWillMount() {
@@ -42,10 +43,26 @@ class ArtifactsModal extends Component {
     }
   }
 
+  renderArtifactFiles(artifactFiles){
+    console.log("Render artifact files called");
+    return _.map(artifactFiles, artifact => {
+      console.log(artifact);
+      return(
+      <div>
+        Name:   {artifact.name} <br/>
+        path: {artifact.path} <br/>
+        size: {artifact.size} <br/>
+      url: <a href={`${this.JENKINS_URL}${artifact.url}`}> {artifact.url} </a> <br/><br/>
+      </div>
+    );
+    });
+
+  }
+
   render(){
     console.log("Inside the render method of artifacts modal");
-    console.log(this.props);
     var runid = this.props.runid;
+    var identifier = this.props.pipelinename+this.props.runid;
     if (!("runartifacts" in this.props.pipelines)){
       // instead of returning add loading gif
       return (
@@ -54,23 +71,26 @@ class ArtifactsModal extends Component {
           <ReactModal isOpen={this.state.showModal}
                       contentLabel="Minimal Modal Example"
                       ariaHideApp={false}>
-                      Sorry Artifacts files not found
+                      Artifacts files not found
           <button onClick={this.handleCloseModal}>Close Modal</button>
           </ReactModal>
         </div>
       );
     }
-    if (("runartifacts" in this.props.pipelines) && this.checkArtifactsExists() )
+    if (("runartifacts" in this.props.pipelines) && this.checkArtifactsExists())
     {
+      console.log("Run Artifacts found are");
+      var artifactfiles = this.props.pipelines.runartifacts[identifier];
+      console.log(artifactfiles);
       return (
         <div>
           <button className="btn btn-default btn-sm" onClick={this.handleOpenModal}>Files</button>
           <ReactModal isOpen={this.state.showModal}
                       contentLabel="Minimal Modal Example"
                       ariaHideApp={false}>
-                      Hello am inside react model and artifacts files found
-                      <br/>
-                      hahaha
+                      Artifacts files found <br/>
+                      {this.renderArtifactFiles(artifactfiles)}
+
           <button onClick={this.handleCloseModal}>Close Modal</button>
           </ReactModal>
         </div>
