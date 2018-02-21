@@ -48,11 +48,11 @@ class ArtifactsModal extends Component {
     return _.map(artifactFiles, artifact => {
       console.log(artifact);
       return(
-      <div>
+      <div key={artifact.name}>
         Name:   {artifact.name} <br/>
         path: {artifact.path} <br/>
         size: {artifact.size} <br/>
-      url: <a href={`${this.JENKINS_URL}${artifact.url}`}> {artifact.url} </a> <br/><br/>
+        url: <a href={`${this.JENKINS_URL}${artifact.url}`} download> {artifact.url} </a> <br/><br/>
       </div>
     );
     });
