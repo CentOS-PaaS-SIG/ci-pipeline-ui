@@ -8,62 +8,58 @@ export const FETCH_PIPELINE_RUN_ARTIFACTS = 'fetch_pipeline_run_artifacts'
 var CONFIG = require("../constants/config")
 import axios from 'axios';
 
-
 export function fetchPipelines() {
-	const request = axios.get(`${CONFIG.CUSTOM_REST_URL}/pipelines`)
-	return {
-		type: FETCH_PIPELINES,
-		payload: request
-	};
-
+  const request = axios.get(`${CONFIG.CUSTOM_REST_URL}/pipelines`);
+  return {
+    type: FETCH_PIPELINES,
+    payload: request
+  };
 }
 
 export function fetchPipeline(id) {
-        const request = axios.get(`${CONFIG.CUSTOM_REST_URL}/pipelines/${id}`)
-        return {
-                type: FETCH_PIPELINE,
-                payload: request
-        };
+  const request = axios.get(`${CONFIG.CUSTOM_REST_URL}/pipelines/${id}`);
+  return {
+    type: FETCH_PIPELINE,
+    payload: request
+  };
 }
-
 
 export function fetchPipelineRuns(id) {
-        const request = axios.get(`${CONFIG.CUSTOM_REST_URL}/pipelines/${id}/runs`)
-        return {
-                type: FETCH_PIPELINE_RUNS,
-                payload: request
-        };
+  const request = axios.get(`${CONFIG.CUSTOM_REST_URL}/pipelines/${id}/runs`);
+  return {
+    type: FETCH_PIPELINE_RUNS,
+    payload: request
+  };
 }
 
-
 export function fetchPipelineRun(id, runId) {
-        const request = axios.get(`${CONFIG.CUSTOM_REST_URL}/pipelines/${id}/${runId}`)
-        return {
-                type: FETCH_PIPELINE_RUN,
-                payload: request
-        };
+  const request = axios.get(`${CONFIG.CUSTOM_REST_URL}/pipelines/${id}/${runId}`);
+  return {
+    type: FETCH_PIPELINE_RUN,
+    payload: request
+  };
 }
 
 export function fetchPipelineRunview(id) {
-        const request = axios.get(`${CONFIG.CUSTOM_REST_URL}/pipelines/${id}/runview`)
-        return {
-                type: FETCH_PIPELINE_RUNVIEW,
-                payload: request
-        };
+  const request = axios.get(`${CONFIG.CUSTOM_REST_URL}/pipelines/${id}/runview`);
+  return {
+    type: FETCH_PIPELINE_RUNVIEW,
+    payload: request
+  };
 }
 
 export function fetchPipelineLatestrun(id) {
-        const request = axios.get(`${CONFIG.CUSTOM_REST_URL}/pipelines/${id}/latestrun`)
-        return {
-                type: FETCH_PIPELINE_LATESTRUN,
-                payload: request
-        };
+  const request = axios.get(`${CONFIG.CUSTOM_REST_URL}/pipelines/${id}/latestrun`);
+  return {
+    type: FETCH_PIPELINE_LATESTRUN,
+    payload: request
+  };
 }
 
 export function fetchPipelineRunArtifacts(id, runId) {
-        const request = axios.get(`${CONFIG.CUSTOM_REST_URL}/pipelines/${id}/runs/${runId}/artifacts`)
-        return {
-                type: FETCH_PIPELINE_RUN_ARTIFACTS,
-                payload: request
-        };
+  const request = axios.get(`${CONFIG.CUSTOM_REST_URL}/pipelines/${id}/runs/${runId}/artifacts`);
+  return {
+    type: FETCH_PIPELINE_RUN_ARTIFACTS,
+    payload: request
+  };
 }

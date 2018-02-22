@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PipelinesIndex from './pipelines_index';
 import { Table } from 'reactstrap';
+
 class PipelineMain extends Component {
   render(){
     return (
@@ -23,4 +24,5 @@ class PipelineMain extends Component {
     );
   }
 }
+
 export default PipelineMain;

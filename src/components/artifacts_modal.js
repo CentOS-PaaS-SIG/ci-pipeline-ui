@@ -18,7 +18,6 @@ class ArtifactsModal extends Component {
   }
 
   componentWillMount() {
-    //console.log("Inside artifacts modal component will mount");
     this.props.fetchPipelineRunArtifacts(this.props.pipelinename, this.props.runid);
   }
 
@@ -31,10 +30,9 @@ class ArtifactsModal extends Component {
   }
 
   checkArtifactsExists(){
-
     var identifier = this.props.pipelinename+this.props.runid;
-    console.log("Inside check artifacts exists");
-    console.log(identifier);
+    //console.log("Inside check artifacts exists");
+    //console.log(identifier);
     if ( identifier in this.props.pipelines.runartifacts){
       return true;
     }
@@ -44,9 +42,8 @@ class ArtifactsModal extends Component {
   }
 
   renderArtifactFiles(artifactFiles){
-    console.log("Render artifact files called");
+    //console.log("Render artifact files called");
     return _.map(artifactFiles, artifact => {
-      console.log(artifact);
       return(
       <div key={artifact.name}>
         Name:   {artifact.name} <br/>
@@ -56,11 +53,9 @@ class ArtifactsModal extends Component {
       </div>
     );
     });
-
   }
 
   render(){
-    console.log("Inside the render method of artifacts modal");
     var runid = this.props.runid;
     var identifier = this.props.pipelinename+this.props.runid;
     if (!("runartifacts" in this.props.pipelines)){
@@ -79,9 +74,7 @@ class ArtifactsModal extends Component {
     }
     if (("runartifacts" in this.props.pipelines) && this.checkArtifactsExists())
     {
-      console.log("Run Artifacts found are");
       var artifactfiles = this.props.pipelines.runartifacts[identifier];
-      console.log(artifactfiles);
       return (
         <div>
           <button className="btn btn-default btn-sm" onClick={this.handleOpenModal}>Files</button>
@@ -113,9 +106,6 @@ class ArtifactsModal extends Component {
 }
 
 function mapStateToProps({ pipelines }, ownProps){
-  //console.log("inside artifacts modal map state to props")
-  //console.log("inside map state to props");
-  //console.log(pipelines);
   return { pipelines };
 }
 

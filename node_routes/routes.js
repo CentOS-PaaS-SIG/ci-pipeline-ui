@@ -21,7 +21,6 @@ function getCacheData(url){
     return value;
   }
   catch( err ){
-    console.log(err);
     return false;
   }
 }
@@ -74,14 +73,10 @@ function getPipelineRunArtifacts(name, runid){
 
 var appRouter = function (app) {
   app.get("/", function(req, res){
-    console.log("url details");
-    console.log(req.headers.host+req.url);
     res.status(200).send("Welcome to our ci-pipeline restful API");
   });
 
   app.get("/pipelines/:id/runs/:runid/artifacts", function(req, res) {
-    console.log("url details");
-    console.log(req.headers.host+req.url);
     var request_url = req.headers.host+req.url;
     // fetch from cache
     var responseData = getCacheData(request_url);
@@ -93,14 +88,11 @@ var appRouter = function (app) {
       });
     }
     else{
-      console.log("Fetching from cache");
       res.status(200).send(responseData);
     }
   });
 
   app.get("/pipelines/:id/runs/:runid/nodes", function(req, res) {
-    console.log("url details");
-    console.log(req.headers.host+req.url);
     var request_url = req.headers.host+req.url;
     // fetch from cache
     var responseData = getCacheData(request_url);
@@ -112,14 +104,11 @@ var appRouter = function (app) {
       });
     }
     else{
-      console.log("Fetching from cache");
       res.status(200).send(responseData);
     }
   });
 
   app.get("/pipelines/:id/runs/:runid", function(req, res) {
-    console.log("url details");
-    console.log(req.headers.host+req.url);
     var request_url = req.headers.host+req.url;
     // fetch from cache
     var responseData = getCacheData(request_url);
@@ -131,14 +120,11 @@ var appRouter = function (app) {
       });
     }
     else{
-      console.log("Fetching from cache");
       res.status(200).send(responseData);
     }
   });
 
   app.get("/pipelines/:id/runview", function(req, res) {
-    console.log("url details");
-    console.log(req.headers.host+req.url);
     var request_url = req.headers.host+req.url;
     // fetch from cache
     var responseData = getCacheData(request_url);
@@ -149,8 +135,6 @@ var appRouter = function (app) {
       run_data["node_results"] = []
       var return_data = []
       returnData["promise"].then(function(data){
-        //console.log("Start of console : runview");
-        //console.log(data);
         for (run_index in data['data']){
           var append_dict = {}
           append_dict["name"]= data['data'][run_index]['name'];
@@ -162,16 +146,13 @@ var appRouter = function (app) {
           run_data["node_promises"].push(getPipelineRunNodes(append_dict["pipeline"], append_dict["runid"])["promise"]);
           return_data.push(append_dict);
         }
-        //console.log(run_data);
         axios.all(run_data["node_promises"]).then(function(results) {
           let temp = results.map(r => r.data);
-          //console.log(temp);
           run_data["node_results"] = temp;
         });
         return return_data;
       }).then((response) => {
         axios.all(run_data["node_promises"]).then(function(values) {
-          //console.log("end of node results ####")
           var i = 0;
           for (i=0;i<values.length;i++){
             response[i]["nodes"] = values[i]["data"];
@@ -182,14 +163,11 @@ var appRouter = function (app) {
       });
     }
     else{
-      console.log("Fetching from cache");
       res.status(200).send(responseData);
     }
   });
 
   app.get("/pipelines/:id/runs", function(req, res) {
-    console.log("url details");
-    console.log(req.headers.host+req.url);
     var request_url = req.headers.host+req.url;
     // fetch from cache
     var responseData = getCacheData(request_url);
@@ -201,14 +179,11 @@ var appRouter = function (app) {
       });
     }
     else{
-      console.log("Fetching from cache");
       res.status(200).send(responseData);
     }
   });
 
   app.get("/pipelines/:id/latestrun", function(req, res) {
-    console.log("url details");
-    console.log(req.headers.host+req.url);
     var request_url = req.headers.host+req.url;
     // fetch from cache
     var responseData = getCacheData(request_url);
@@ -220,14 +195,11 @@ var appRouter = function (app) {
       });
     }
     else{
-      console.log("Fetching from cache");
       res.status(200).send(responseData);
     }
   });
 
   app.get("/pipelines/:id", function(req, res) {
-    console.log("url details");
-    console.log(req.headers.host+req.url);
     var request_url = req.headers.host+req.url;
     // fetch from cache
     var responseData = getCacheData(request_url);
@@ -239,14 +211,11 @@ var appRouter = function (app) {
       });
     }
     else{
-      console.log("Fetching from cache");
       res.status(200).send(responseData);
     }
   });
 
   app.get("/pipelines", function(req, res) {
-    console.log("url details");
-    console.log(req.headers.host+req.url);
     var request_url = req.headers.host+req.url;
     // fetch from cache
     var responseData = getCacheData(request_url);
@@ -274,7 +243,6 @@ var appRouter = function (app) {
       });
     }
     else{
-      console.log("Fetching from cache");
       res.status(200).send(responseData);
     }
   });

@@ -8,6 +8,11 @@ class PipelinesIndex extends Component {
 
   componentWillMount() {
     this.props.fetchPipelines();
+    this.intervalFun = setInterval(function() { this.props.fetchPipelines(); }.bind(this), 10000);
+  }
+
+  componentWillUnmount(){
+    clearInterval(this.intervalFun);
   }
 
   renderPipelines(){

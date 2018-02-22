@@ -35,7 +35,6 @@ class PipelineRuns extends Component {
   }
   render(){
     const { pipelines } = this.props;
-    console.log(pipelines);
     if (Object.keys(pipelines).length == 0){
       return (
         <div>
@@ -66,7 +65,6 @@ class PipelineRuns extends Component {
     }
   }
 }
-
 
 function mapStateToProps({ pipelines }, ownProps){
   return { pipelines };

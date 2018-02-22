@@ -16,15 +16,10 @@ export default function(state = {}, action){
     case FETCH_PIPELINE_RUNS:
       return { ...state, "pipelineruns": action.payload.data }
     case FETCH_PIPELINE_RUNVIEW:
-      console.log("Inside the reducer pipeline::");
-      //console.log(action.payload.data);
       return { ...state, "pipelinerunview": action.payload.data }
     case FETCH_PIPELINE_LATESTRUN:
-      console.log("Inside the reducer pipeline latestrun:");
-      //console.log(action.payload.data);
       return { ...state, "pipelinelatestrun": [action.payload.data] }
     case FETCH_PIPELINE_RUN_ARTIFACTS:
-      console.log("Inside the reducer fetch pipelinerun artifacts:");
       if (!("runartifacts" in state )){
         state["runartifacts"] = {};
       }

@@ -9,6 +9,7 @@ class PipelinesShow extends Component {
     const id = this.props.match.params.id;
     this.props.fetchPipeline(id);
   }
+
   render(){
     const { pipeline } = this.props;
     if (!pipeline){
@@ -21,7 +22,6 @@ class PipelinesShow extends Component {
       )
     }
     else{
-      console.log(pipeline);
       var url = `${CONFIG.JENKINS_BASE_URL}${ pipeline.latestRun.artifactsZipFile }`
       return (
         <div>

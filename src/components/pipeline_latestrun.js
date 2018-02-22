@@ -7,25 +7,20 @@ class PipelineLatestrun extends Component {
   componentWillMount() {
     const id = this.props.match.params.id;
     this.props.fetchPipelineLatestrun(id);
-
   }
 
   renderLatestRun(){
     return _.map(this.props.pipelines.pipelinelatestrun, plr => {
-      console.log(plr);
       return (
         <div key={plr.id}>
           <h5> id: {plr.id}</h5>
           <h5> Name: {plr.id}</h5>
           <h5> Result: {plr.result}</h5>
-
         </div>
-      )
-
+      );
     })
   }
   render(){
-    console.log(this.props.pipelines);
     if(Object.keys(this.props.pipelines).length ==0){
       return(
         <div>
@@ -36,8 +31,6 @@ class PipelineLatestrun extends Component {
       );
     }
     else{
-      console.log("inside render else");
-      console.log(this.props.pipelines.pipelinelatestrun);
       return(
         <div>
           {this.renderLatestRun()}

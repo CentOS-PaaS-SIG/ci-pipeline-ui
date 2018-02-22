@@ -9,7 +9,6 @@ var CONFIG = require("../constants/config")
 
 
 class PipelineRunview extends Component {
-
   constructor () {
     super();
     this.state = {
@@ -34,7 +33,6 @@ class PipelineRunview extends Component {
   /* Note: make nodes as components */
   renderRunNodes(nodes){
     return _.map(nodes, node  => {
-      //console.log(node);
       if (node.result && node.state){
         return(
           <div className="flex-item" key={node.id}>
@@ -55,9 +53,7 @@ class PipelineRunview extends Component {
   renderRunview(){
     const { open } = this.state;
     return _.map(this.props.pipelines.pipelinerunview, (pipelinerunview, index) => {
-      //console.log(pipelinerunview);
-      var artifactsURL = `${CONFIG.JENKINS_BASE_URL}/job/${pipelinerunview.pipeline}/${pipelinerunview.runid}/artifact/*zip*/archive.zip`
-      //console.log(artifactsURL);
+      var artifactsURL = `${CONFIG.JENKINS_BASE_URL}/job/${pipelinerunview.pipeline}/${pipelinerunview.runid}/artifact/*zip*/archive.zip`;
       if (pipelinerunview.name){
           /*  convert the following modalbox into a component */
       return (
