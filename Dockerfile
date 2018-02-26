@@ -22,7 +22,7 @@ RUN mkdir /src
 WORKDIR /src
 
 ADD package.json /src
-RUN npm install
+RUN npm install -g nodemon && npm install
 
 # Add code of our nodejs project with respect to gitignore
 ADD . /src
