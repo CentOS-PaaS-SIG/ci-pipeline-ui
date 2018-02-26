@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import ReactModal from 'react-modal';
 import { Link } from 'react-router-dom';
 import { fetchPipelineRunArtifacts }  from '../actions';
-
+var CONFIG = require("../constants/config");
 
 class ArtifactsModal extends Component {
   constructor () {
@@ -19,6 +19,13 @@ class ArtifactsModal extends Component {
 
   componentWillMount() {
     this.props.fetchPipelineRunArtifacts(this.props.pipelinename, this.props.runid);
+    this.intervalFun = setInterval(function() {
+      this.props.fetchPipelineRunArtifacts(this.props.pipelinename, this.props.runid);
+    }.bind(this), CONFIG.CACHE_TIMEOUT);
+  }
+
+  componentWillUnmount(){
+    clearInterval(this.intervalFun);
   }
 
   handleOpenModal () {

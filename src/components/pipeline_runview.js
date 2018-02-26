@@ -7,7 +7,6 @@ import { fetchPipelineRunview }  from '../actions';
 import ArtifactsModal from './artifacts_modal';
 var CONFIG = require("../constants/config")
 
-
 class PipelineRunview extends Component {
   constructor () {
     super();
@@ -29,7 +28,15 @@ class PipelineRunview extends Component {
   componentWillMount() {
     const id = this.props.match.params.id;
     this.props.fetchPipelineRunview(id);
+    this.intervalFun = setInterval(function(){
+      this.props.fetchPipelineRunview(id);
+    }.bind(this), CONFIG.CACHE_TIMEOUT);
   }
+
+  componentWillUnmount(){
+    clearInterval(this.intervalFun);
+  }
+  
   /* Note: make nodes as components */
   renderRunNodes(nodes){
     return _.map(nodes, node  => {

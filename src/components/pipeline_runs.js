@@ -1,13 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchPipelineRuns }  from '../actions';
-
+var CONFIG = require("../constants/config")
 
 class PipelineRuns extends Component {
+
   componentWillMount() {
     const id = this.props.match.params.id;
     this.props.fetchPipelineRuns(id);
+    this.intervalFun = setInterval(function(){
+      this.props.fetchPipelineRuns(id);
+    }.bind(this), CONFIG.CACHE_TIMEOUT);
   }
+
+  componentWillUnmount(){
+    clearInterval(this.intervalFun);
+  }
+
   renderPipelineRuns(){
     return _.map(this.props.pipelines.pipelineruns, pipelinerun => {
       return (
@@ -33,6 +42,7 @@ class PipelineRuns extends Component {
       )
     })
   }
+
   render(){
     const { pipelines } = this.props;
     if (Object.keys(pipelines).length == 0){

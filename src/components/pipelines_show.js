@@ -5,9 +5,17 @@ import { Link } from 'react-router-dom';
 var CONFIG = require("../constants/config")
 
 class PipelinesShow extends Component {
+
   componentWillMount() {
     const id = this.props.match.params.id;
     this.props.fetchPipeline(id);
+    this.intervalFun = setInterval(function(){
+      this.props.fetchPipeline(id);
+    }.bind(this), CONFIG.CACHE_TIMEOUT);
+  }
+
+  componentWillUnmount(){
+    clearInterval(this.intervalFun);
   }
 
   render(){

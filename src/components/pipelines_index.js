@@ -3,12 +3,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchPipelines } from '../actions';
+var CONFIG = require("../constants/config")
 
 class PipelinesIndex extends Component {
 
   componentWillMount() {
     this.props.fetchPipelines();
-    this.intervalFun = setInterval(function() { this.props.fetchPipelines(); }.bind(this), 10000);
+    this.intervalFun = setInterval(function(){
+      this.props.fetchPipelines();
+    }.bind(this), CONFIG.CACHE_TIMEOUT);
   }
 
   componentWillUnmount(){

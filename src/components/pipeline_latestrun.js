@@ -2,11 +2,20 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchPipelineLatestrun } from '../actions';
+var CONFIG = require("../constants/config")
 
 class PipelineLatestrun extends Component {
+
   componentWillMount() {
     const id = this.props.match.params.id;
     this.props.fetchPipelineLatestrun(id);
+    this.intervalFun = setInterval(function(){
+      this.props.fetchPipelineLatestrun(id);
+    }.bind(this), CONFIG.CACHE_TIMEOUT);
+  }
+
+  componentWillUnmount(){
+    clearInterval(this.intervalFun);
   }
 
   renderLatestRun(){
@@ -36,13 +45,6 @@ class PipelineLatestrun extends Component {
           {this.renderLatestRun()}
         </div>
       );
-  /*  return(
-      <div>
-        <h3> Pipeline latest run details </h3>
-        {this.props.pipelines.pipelinelatestrun.name}
-      </div>
-    );
-    */
   }
   }
 }
