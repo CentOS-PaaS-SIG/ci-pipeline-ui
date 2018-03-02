@@ -19,15 +19,31 @@ class PipelineLatestrun extends Component {
   }
 
   renderLatestRun(){
-    return _.map(this.props.pipelines.pipelinelatestrun, plr => {
+    console.log("Inside render latest run");
+    console.log(this.props.pipelines.pipelinelatestrun);
+    if (this.props.pipelines.pipelinelatestrun){
+      return _.map(this.props.pipelines.pipelinelatestrun, plr => {
+        return (
+          <div key={plr.id}>
+            <h5> id: {plr.id}</h5>
+            <h5> Name: {plr.id}</h5>
+            <h5> Result: {plr.result}</h5>
+          </div>
+        );
+      });
+    }
+    else {
+      var test_var = [{"hi": "hello"}]
+      return _.map(test_var, plr => {
       return (
-        <div key={plr.id}>
-          <h5> id: {plr.id}</h5>
-          <h5> Name: {plr.id}</h5>
-          <h5> Result: {plr.result}</h5>
+        <div key="notfound">
+          <h5> id: Id not found</h5>
+          <h5> Name: not found </h5>
+          <h5> Result: not found</h5>
         </div>
       );
-    })
+    });
+    }
   }
   render(){
     if(Object.keys(this.props.pipelines).length ==0){

@@ -10,6 +10,7 @@ import axios from 'axios';
 
 export function fetchPipelines() {
   const request = axios.get(`${CONFIG.CUSTOM_REST_URL}/pipelines`);
+
   return {
     type: FETCH_PIPELINES,
     payload: request

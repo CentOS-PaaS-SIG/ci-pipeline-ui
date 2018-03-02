@@ -21,6 +21,7 @@ class PipelinesIndex extends Component {
   renderPipelines(){
     return _.map(this.props.pipelines, pipeline => {
       if (pipeline.id){
+        var pipeline_name = pipeline.name.replace("/", "-");
       return (
         <tr key={`${pipeline.id}`}>
           <td scope="row">
@@ -36,28 +37,28 @@ class PipelinesIndex extends Component {
           </td>
           <td>
             <button type="button" className="btn btn-default btn-sm">
-              <Link to={`/pipelines/${pipeline.name}`}>
+              <Link to={`/pipelines/${pipeline_name}`}>
                 Details
               </Link>
             </button>
           </td>
           <td>
             <button type="button" className="btn btn-default btn-sm">
-              <Link to={`/pipelines/${pipeline.name}/latestrun`}>
+              <Link to={`/pipelines/${pipeline_name}/latestrun`}>
                 Latest run
               </Link>
             </button>
           </td>
           <td>
             <button type="button" className="btn btn-default btn-sm">
-              <Link to={`/pipelines/${pipeline.name}/runs`}>
+              <Link to={`/pipelines/${pipeline_name}/runs`}>
                 All Runs
               </Link>
             </button>
           </td>
           <td>
             <button type="button" className="btn btn-default btn-sm">
-              <Link to={`/pipelines/${pipeline.name}/runview`}>
+              <Link to={`/pipelines/${pipeline_name}/runview`}>
                 Run View
               </Link>
             </button>
