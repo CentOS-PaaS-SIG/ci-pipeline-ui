@@ -6,6 +6,7 @@ const NodeCache = require('node-cache');
 const myCache = new NodeCache( { stdTTL: 100, checkperiod: 120 } );
 const ROOT_URL = "https://jenkins-continuous-infra.apps.ci.centos.org/blue/rest/organizations/jenkins/pipelines/";
 const JENKINS_URL = "https://jenkins-continuous-infra.apps.ci.centos.org";
+const PIPELINE_BLACKLIST = ["_ci-pipeline-f26","stagesender","tt"];
 
 var log = bunyan.createLogger({
   name: 'ci-pipeline-ui',
@@ -41,6 +42,8 @@ myCache.on( "del", function( key, value ){
 });
 
 function setCacheData(url, data){
+  console.log("setting cachefor ");
+  console.log("http://"+url);
   var status = myCache.set( "http://"+url , data, 1000);
   return status;
 }
@@ -229,8 +232,9 @@ var appRouter = function (app) {
 
   app.get("/pipelines/:id/runs", function(req, res) {
     var request_url = req.headers.host+req.url;
-    //log.info("request recieved");
-    //log.info(request_url);
+    log.info("request recieved");
+    log.info(request_url);
+    console.log("fetching from cache");
     // fetch from cache
     var responseData = getCacheData(request_url);
     if (responseData === false){
@@ -283,9 +287,10 @@ var appRouter = function (app) {
 
   app.get("/pipelines", function(req, res) {
     var request_url = req.headers.host+req.url;
-    //console.log(request_url);
+    console.log(request_url);
     // fetch from cache
     var responseData = getCacheData(request_url);
+    console.log(responseData);
     if (responseData === false){
       //console.log("inside false cond");
       var returnData = getPipelines();
@@ -293,18 +298,22 @@ var appRouter = function (app) {
         var names = [];
         var i = 1;
         for (index in data["data"]){
-          var dict = {};
-          dict["id"] = i;
-          dict["name"] = data["data"][index]["displayName"];
-          dict["weatherScore"] = data["data"][index]["weatherScore"];
-          if (data["data"][index]["latestRun"]){
-            dict["latestRun"] = data["data"][index]["latestRun"]
+          console.log(data["data"][index]["displayName"]);
+          console.log(PIPELINE_BLACKLIST.indexOf(data["data"][index]["displayName"]));
+          if (PIPELINE_BLACKLIST.indexOf(data["data"][index]["displayName"]) === -1){
+            var dict = {};
+            dict["id"] = i;
+            dict["name"] = data["data"][index]["displayName"];
+            dict["weatherScore"] = data["data"][index]["weatherScore"];
+            if (data["data"][index]["latestRun"]){
+              dict["latestRun"] = data["data"][index]["latestRun"]
+            }
+            else{
+              dict["latestRun"] = {};
+            }
+            names.push(dict);
+            i = i+1;
           }
-          else{
-            dict["latestRun"] = {};
-          }
-          names.push(dict);
-          i = i+1;
         }
         //console.log("priniting pipeline names");
         //console.log(names);
