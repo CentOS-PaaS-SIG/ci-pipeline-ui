@@ -36,7 +36,28 @@ class PipelineRunview extends Component {
   componentWillUnmount(){
     clearInterval(this.intervalFun);
   }
-  
+
+  renderLabel(labelState) {
+  if (labelState == "SUCCESS") {
+    return (
+      <span className="label label-info">Success</span>
+    );
+  }
+  else if (labelState == "FAILURE") {
+    return (
+      <span className="label label-danger">Failure</span>
+    );
+  }
+  else if (labelState == "FINISHED") {
+    return (
+      <span className="label label-default">Finished</span>
+    );
+  }
+  return (
+    <span className="label label-default" >{labelState}</span>
+  );
+  }
+
   /* Note: make nodes as components */
   renderRunNodes(nodes){
     return _.map(nodes, node  => {
@@ -46,9 +67,9 @@ class PipelineRunview extends Component {
             <div className="card">
               <h6><b>{node.displayName}</b></h6>
               <div className="cardcontainer">
-                <span className="label label-default" >{node.result}</span>
-                  <br></br>
-                <span className="label label-default" >{node.state}</span>
+                {this.renderLabel(node.result)}
+                <br></br>
+                {this.renderLabel(node.state)}
               </div>
             </div>
           </div>

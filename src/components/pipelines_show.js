@@ -59,7 +59,7 @@ class PipelinesShow extends Component {
         <table className="table table-hover table-bordered">
           <thead className="thead-light">
             <tr>
-              <th scope="col" colSpan="2"><h4>Pipeline Details </h4></th>
+              <th scope="col" colSpan="2"><div className="jumbotron"><h2>Pipeline Details </h2></div></th>
             </tr>
           </thead>
           <tbody>

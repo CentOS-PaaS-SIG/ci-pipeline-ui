@@ -52,11 +52,11 @@ class ArtifactsModal extends Component {
     //console.log("Render artifact files called");
     return _.map(artifactFiles, artifact => {
       return(
-      <div key={artifact.name}>
-        Name:   {artifact.name} <br/>
-        path: {artifact.path} <br/>
-        size: {artifact.size} <br/>
-        url: <a href={`${this.JENKINS_URL}${artifact.url}`} download> {artifact.url} </a> <br/><br/>
+      <div key={artifact.name} className="list-group">
+      <li className="list-group-item active">  Name:   {artifact.name}</li>
+      <li className="list-group-item">  Path: {artifact.path} </li>
+      <li className="list-group-item">  Size: {artifact.size} </li>
+      <li className="list-group-item">  URL: <a href={`${this.JENKINS_URL}${artifact.url}`} download> {artifact.url} </a> </li>
       </div>
     );
     });
@@ -69,12 +69,13 @@ class ArtifactsModal extends Component {
       // instead of returning add loading gif
       return (
         <div>
+
           <button className="btn btn-default btn-sm" onClick={this.handleOpenModal}>Files</button>
           <ReactModal isOpen={this.state.showModal}
                       contentLabel="Minimal Modal Example"
                       ariaHideApp={false}>
-                      Artifacts files not found
-          <button onClick={this.handleCloseModal}>Close Modal</button>
+                  <div className="jumbotron">    Artifacts files not found </div>
+                      <button onClick={this.handleCloseModal} align="right">Close</button>
           </ReactModal>
         </div>
       );
@@ -88,10 +89,10 @@ class ArtifactsModal extends Component {
           <ReactModal isOpen={this.state.showModal}
                       contentLabel="Minimal Modal Example"
                       ariaHideApp={false}>
-                      Artifacts files found <br/>
-                      {this.renderArtifactFiles(artifactfiles)}
+          <div className="jumbotron"> <h2 style={{ display: 'inline' }}> Artifacts files </h2>
+          <button className="btn btn-default btn-sm" onClick={this.handleCloseModal} >Close</button></div>
+          {this.renderArtifactFiles(artifactfiles)}
 
-          <button onClick={this.handleCloseModal}>Close Modal</button>
           </ReactModal>
         </div>
       );
@@ -104,7 +105,7 @@ class ArtifactsModal extends Component {
                       contentLabel="Minimal Modal Example"
                       ariaHideApp={false}>
                       Artifact files not found
-          <button onClick={this.handleCloseModal}>Close Modal</button>
+          <button className="btn btn-default btn-sm" onClick={this.handleCloseModal} style={{alignSelf: 'flex-end'}}>Close Modal</button>
           </ReactModal>
         </div>
       );

@@ -22,10 +22,18 @@ class PipelineRuns extends Component {
       return (
         <tr key={pipelinerun.id}>
           <td>
-            {pipelinerun.id}
+            {pipelinerun.id ? (
+              <h6> {pipelinerun.id} </h6>
+            ) : (
+              <h6> undefined </h6>
+            )}
           </td>
           <td>
-            {pipelinerun.name}
+            {pipelinerun.name ? (
+              <h6> {pipelinerun.name} </h6>
+            ) : (
+              <h6> undefined </h6>
+            )}
           </td>
           <td>
             {pipelinerun.result}
@@ -42,7 +50,6 @@ class PipelineRuns extends Component {
       )
     })
   }
-
   render(){
     const { pipelines } = this.props;
     if (Object.keys(pipelines).length == 0){
@@ -56,8 +63,7 @@ class PipelineRuns extends Component {
     }
     else{
       return (
-        <div className="table-responsive">
-          <table className="table">
+          <table className="table table-hover table-bordered">
             <thead>
               <tr>
                 <th>#</th>
@@ -70,7 +76,6 @@ class PipelineRuns extends Component {
             {this.renderPipelineRuns()}
           </tbody>
           </table>
-        </div>
       );
     }
   }
