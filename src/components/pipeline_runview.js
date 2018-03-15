@@ -117,6 +117,10 @@ class PipelineRunview extends Component {
         <h3> Runview: </h3>
         <div className="table-responsive">
           <table className="table-bordered table-hover">
+            <colgroup>
+            <col style={{width: '2%'}}></col>
+            <col style={{width: '10%'}}></col>
+            </colgroup>
             <thead>
               <tr>
                 <th>#</th>
