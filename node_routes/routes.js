@@ -41,10 +41,10 @@ myCache.on( "del", function( key, value ){
   });
 });
 
-function setCacheData(url, data){
+function setCacheData(url, data, timeout = 1000){
   console.log("setting cachefor ");
   console.log("http://"+url);
-  var status = myCache.set( "http://"+url , data, 1000);
+  var status = myCache.set( "http://"+url , data, timeout);
   return status;
 }
 
@@ -109,6 +109,12 @@ function getPipelineRunArtifacts(name, runid){
   return formatReturnData(REQ_URL, axios.get(REQ_URL, { responseType: 'json' }));
 }
 
+function getPipelineWFAPI(name){
+  // example https://jenkins-continuous-infra.apps.ci.centos.org/job/ci-pipeline-linchpin/wfapi/runs
+  var REQ_URL = JENKINS_URL+'/job/'+name+'/wfapi/runs';
+  return formatReturnData(REQ_URL, axios.get(REQ_URL, { responseType: 'json' }));
+}
+
 var appRouter = function (app) {
   app.get("/", function(req, res){
     //log.info("request recieved");
@@ -168,6 +174,22 @@ var appRouter = function (app) {
     else{
       res.status(200).send(responseData);
     }
+  });
+
+  app.get("/pipelines/:id/wfapi", function(req, res){
+    var request_url = req.headers.host+req.url;
+    var responseData = getCacheData(request_url);
+    if (responseData === false){
+      var returnData = getPipelineWFAPI(req.params.id);
+      returnData["promise"].then(function(data){
+        setCacheData(request_url, data['data']);
+        res.status(200).send(data['data']);
+      });
+    }
+    else{
+      res.status(200).send(responseData);
+    }
+    res.status(200).send("Welcome to our ci-pipeline restful API");
   });
 
   app.get("/pipelines/:id/runview", function(req, res) {
@@ -287,7 +309,7 @@ var appRouter = function (app) {
 
   app.get("/pipelines", function(req, res) {
     var request_url = req.headers.host+req.url;
-    console.log(request_url);
+    //console.log(request_url);
     // fetch from cache
     var responseData = getCacheData(request_url);
     console.log(responseData);
@@ -298,8 +320,8 @@ var appRouter = function (app) {
         var names = [];
         var i = 1;
         for (index in data["data"]){
-          console.log(data["data"][index]["displayName"]);
-          console.log(PIPELINE_BLACKLIST.indexOf(data["data"][index]["displayName"]));
+          //console.log(data["data"][index]["displayName"]);
+          //console.log(PIPELINE_BLACKLIST.indexOf(data["data"][index]["displayName"]));
           if (PIPELINE_BLACKLIST.indexOf(data["data"][index]["displayName"]) === -1){
             var dict = {};
             dict["id"] = i;
