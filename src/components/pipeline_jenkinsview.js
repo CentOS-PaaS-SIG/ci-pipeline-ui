@@ -41,24 +41,60 @@ class PipelineJenkinsview extends Component {
     );
   }
 
+  renderTime(duration){
+    var date = new Date(duration);
+
+    console.log(duration);
+    var str = '';
+    let hrs = date.getUTCHours();
+    let mins = date.getUTCMinutes()
+    let secs = date.getUTCSeconds()
+    let mills = date.getUTCMilliseconds()
+    if (hrs > 0){
+      str += hrs + " hrs ";
+    }
+    if (mins > 0){
+      str += mins + " min ";
+    }
+    if (secs > 0){
+      str += secs + " s ";
+    }
+    if (mills > 0){
+      str += mills + " ms ";
+    }
+    return (
+      <span className="label label-default">{str}</span>
+    );
+  }
+
   renderSteps(stages){
     //console.log("stages reached");
     //console.log(stages);
     return _.map(stages, stage  => {
-      console.log(stage);
+      //console.log(stage);
+      let duration = stage.dirationMillis/1000
+      if (stage.status == 'SUCCESS'){
         return(
           <td key={stage.id}>
-          <div className="">
-          <div className="" key={stage.id}>
-            <div className="jcard">
+            <div className="jcard greencolordiv">
               <div className="jcardcontainer">
-                {this.renderLabel(stage.status)}
+                {this.renderTime(stage.durationMillis)}
               </div>
             </div>
-          </div>
-          </div>
-        </td>
+          </td>
         );
+      }
+      else if (stage.status == 'FAILED'){
+        return(
+        <td key={stage.id}>
+          <div className="jcard redcolordiv">
+            <div className="jcardcontainer">
+              {this.renderLabel(stage.status)}
+            </div>
+          </div>
+      </td>
+      );
+      }
       });
   }
 
@@ -76,8 +112,8 @@ class PipelineJenkinsview extends Component {
   }
 
   getMaxRows(workflows){
-    console.log("inside the workflows");
-    console.log(workflows);
+    //console.log("inside the workflows");
+    //console.log(workflows);
     var maxrows = 0;
     var rowHeaders = [];
     for (var ri in workflows){
@@ -93,35 +129,41 @@ class PipelineJenkinsview extends Component {
     return rowHeaders;
   }
   renderHeaders(rowHeaders){
-    console.log("inside row headers");
-    console.log(rowHeaders);
+    //console.log("inside row headers");
+    //console.log(rowHeaders);
     var headers = _.map(rowHeaders, rh => {
-      console.log(rh);
+      //console.log(rh);
       return (
-        <th key={rh.id}> {rh.name} </th>
+        <th key={rh.id} className="wordwrap">
+          <div className="">
+            <div className="jcardcontainer">
+              {rh.name}
+            </div>
+          </div>
+        </th>
       );
     });
-    console.log(headers);
+    //console.log(headers);
     return headers;
   }
 
   renderColGroups(rowHeaders){
     let headerLength = rowHeaders.length;
-    let percentage = 83/headerLength;
+    let percentage = 80/headerLength;
     var colgroups = _.map(rowHeaders, rh => {
       return (
-        <col style={{width: percentage}}></col>
+        <col key={rh.id} style={{width: percentage}}></col>
       );
     });
     return colgroups;
   }
 
   render(){
-    console.log(this.props.pipelines.pipelinejenkinsview);
+    //console.log(this.props.pipelines.pipelinejenkinsview);
     if(this.props.pipelines.pipelinejenkinsview){
-      console.log("inside render jenkinsview");
+      //console.log("inside render jenkinsview");
       var workflows = this.props.pipelines.pipelinejenkinsview;
-      console.log(workflows);
+      //console.log(workflows);
       var rowHeaders = this.getMaxRows(workflows);
       return (
           <div className="table-responsive">
@@ -131,7 +173,7 @@ class PipelineJenkinsview extends Component {
               <col style={{width: '15%'}}></col>
               {this.renderColGroups(rowHeaders)}
               </colgroup>
-              <thead>
+              <thead className="table-info">
                 <tr>
                   <th> # </th>
                   <th> Name </th>
