@@ -187,9 +187,8 @@ var appRouter = function (app) {
       });
     }
     else{
-      res.status(200).send(responseData);
+      res.send(responseData);
     }
-    res.status(200).send("Welcome to our ci-pipeline restful API");
   });
 
   app.get("/pipelines/:id/runview", function(req, res) {
