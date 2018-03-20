@@ -44,15 +44,15 @@ class PipelinesIndex extends Component {
           </td>
           <td>
             <button type="button" className="btn btn-default btn-sm">
-              <Link to={`/pipelines/${pipeline_name}/latestrun`}>
-                Latest run
+              <Link to={`/pipelines/${pipeline_name}/runs`}>
+                All Runs
               </Link>
             </button>
           </td>
           <td>
             <button type="button" className="btn btn-default btn-sm">
-              <Link to={`/pipelines/${pipeline_name}/runs`}>
-                All Runs
+              <Link to={`/pipelines/${pipeline_name}/jenkinsview`}>
+                Jenkins View
               </Link>
             </button>
           </td>
@@ -70,6 +70,7 @@ class PipelinesIndex extends Component {
   }
 
   render(){
+    //console.log(this.state);
     if(!this.props.pipelines){
       return(
         <tbody>

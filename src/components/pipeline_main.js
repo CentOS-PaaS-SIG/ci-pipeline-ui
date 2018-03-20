@@ -13,8 +13,8 @@ class PipelineMain extends Component {
               <th>Name</th>
               <th>weatherScore</th>
               <th>Details</th>
-              <th>LatestRun</th>
               <th>AllRuns</th>
+              <th>Jenkins View </th>
               <th>Run View</th>
             </tr>
           </thead>

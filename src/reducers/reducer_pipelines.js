@@ -5,6 +5,7 @@ import { FETCH_PIPELINE_RUNS } from '../actions';
 import { FETCH_PIPELINE_RUNVIEW } from '../actions';
 import { FETCH_PIPELINE_LATESTRUN } from '../actions';
 import { FETCH_PIPELINE_RUN_ARTIFACTS } from '../actions';
+import { FETCH_PIPELINE_JENKINSVIEW } from '../actions';
 
 
 export default function(state = {}, action){
@@ -17,6 +18,10 @@ export default function(state = {}, action){
       return { ...state, "pipelineruns": action.payload.data }
     case FETCH_PIPELINE_RUNVIEW:
       return { ...state, "pipelinerunview": action.payload.data }
+    case FETCH_PIPELINE_JENKINSVIEW:
+      console.log("Inside the jenkins view reducer");
+      console.log(action.payload.data);
+      return { ...state, "pipelinejenkinsview": action.payload.data }
     case FETCH_PIPELINE_LATESTRUN:
       return { ...state, "pipelinelatestrun": [action.payload.data] }
     case FETCH_PIPELINE_RUN_ARTIFACTS:
