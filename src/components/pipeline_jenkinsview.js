@@ -89,7 +89,7 @@ class PipelineJenkinsview extends Component {
         <td key={stage.id}>
           <div className="jcard redcolordiv">
             <div className="jcardcontainer">
-              {this.renderLabel(stage.status)}
+              {this.renderTime(stage.durationMillis)}
             </div>
           </div>
       </td>
