@@ -130,22 +130,23 @@ table {
 }
 
 .greencolordiv {
-	color: #333;
-  background-color: rgba(142, 213, 87, 0.8);
+	color: #def8de;
+  background-color: #def8de;
 }
 .greencolordiv:hover {
 	color: #333;
 	/*background-color: rgba(142, 213, 87, 0.6);*/
-  background: radial-gradient(ellipse ,#a0e46c 80%, white);
+  /*background: radial-gradient(ellipse ,#def8de 80%, white);*/
+  background-color: rgba(222,248,222, 0.6);
 }
 
 .redcolordiv {
 	color: #333;
-  background-color: rgba(255, 188, 188, 0.8);
+  background-color: #ffe5e5;
 }
 .redcolordiv:hover {
 	color: #333;
-	background-color: rgba(255, 188, 188, 0.6);
+	background-color: rgba(255,229,229, 0.6);
 }
 
 
