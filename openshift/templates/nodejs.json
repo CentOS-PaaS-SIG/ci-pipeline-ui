@@ -36,7 +36,12 @@
             "name": "web",
             "port": 8080,
             "targetPort": 8080
-          }
+          },
+	  {
+	    "name": "rest",
+	    "port": 3000,
+	    "targetPort": 3000
+	  }
         ],
         "selector": {
           "name": "${NAME}"
@@ -184,6 +189,9 @@
                 "ports": [
                   {
                     "containerPort": 8080
+                  },
+		  {
+                    "containerPort": 3000
                   }
                 ],
                 "readinessProbe": {
