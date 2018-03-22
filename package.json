@@ -42,5 +42,6 @@
     "reactstrap": "^4.8.0",
     "redux": "^3.0.4",
     "redux-promise": "^0.5.3"
-  }
+  },
+  "homepage": "https://github.com/samvarankashyap/ci-pipeline-ui"
 }
