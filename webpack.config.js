@@ -1,3 +1,5 @@
+const webpack = require('webpack');
+
 module.exports = {
   entry: [
     './src/index.js'
@@ -23,5 +25,15 @@ module.exports = {
     historyApiFallback: true,
     contentBase: './',
     disableHostCheck: true
-  }
+  },
+  plugins: [
+    // ... your plugins
+    new webpack.DefinePlugin({
+      'process.env':{
+        'OPENSHIFT_DOMAIN_NAME': "\""+process.env.OS_DOMAIN+"\"",
+	      'OPENSHIFT_BUILD_NAMESPACE': "\""+process.env.OPENSHIFT_BUILD_NAMESPACE+"\"",
+        'APP_DOMAIN': "\""+process.env.APP_DOMAIN+"\""
+      }
+    })
+  ]
 };
