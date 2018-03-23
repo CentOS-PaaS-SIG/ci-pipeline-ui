@@ -13,18 +13,21 @@ var log = bunyan.createLogger({
   streams: [
     {
       level: 'info',
-      stream: process.stdout            // log INFO and above to stdout
+      path: 'ci-ui-info.log',
+      type: 'rotating-file',
+      period: '1d',
+      count: 3
     },
     {
       level: 'error',
-      path: '/tmp/error-warning.log',
+      path: 'ci-ui-error-warning.log',
       type: 'rotating-file',
       period: '1d',
       count: 3
     },
     {
       level: 'debug',
-      path: '/tmp/debug.log',
+      path: 'ci-ui-debug.log',
       type: 'rotating-file',
       period: '1d',
       count: 3
@@ -69,8 +72,20 @@ function formatReturnData(rqurl, promise){
   return returnData;
 }
 
+
+
 function getPipelines(){
   return formatReturnData(ROOT_URL, axios.get(ROOT_URL, { responseType: 'json' }));
+}
+
+function getPipelineViews(){
+  var REQ_URL = JENKINS_URL+'/api/json';
+  return formatReturnData(REQ_URL, axios.get(REQ_URL, { responseType: 'json' }));
+}
+
+function getPipelineViewByName(name='all'){
+  var REQ_URL = JENKINS_URL+'/view/'+name+'/api/json';
+  return formatReturnData(REQ_URL, axios.get(REQ_URL, { responseType: 'json' }));
 }
 
 function getPipelineDetails(name){
@@ -120,6 +135,37 @@ var appRouter = function (app) {
     //log.info("request recieved");
     //log.info(request_url);
     res.status(200).send("Welcome to our ci-pipeline restful API");
+  });
+
+  app.get("/pipelines/views", function(req, res){
+    var request_url = req.headers.host+req.url;
+    var responseData = getCacheData(request_url);
+    if (responseData === false){
+      var returnData = getPipelineViews();
+      returnData["promise"].then(function(data){
+        setCacheData(request_url, data['data']);
+        res.status(200).send(data['data']);
+      });
+    }
+    else{
+      res.status(200).send(responseData);
+    }
+  });
+
+  app.get("/pipelines/views/:id", function(req, res){
+    var request_url = req.headers.host+req.url;
+
+    var responseData = getCacheData(request_url);
+    if (responseData === false){
+      var returnData = getPipelineViewByName(req.params.id);
+      returnData["promise"].then(function(data){
+        setCacheData(request_url, data['data']);
+        res.status(200).send(data['data']);
+      });
+    }
+    else{
+      res.status(200).send(responseData);
+    }
   });
 
   app.get("/pipelines/:id/runs/:runid/artifacts", function(req, res) {
@@ -368,6 +414,6 @@ function init(){
   });
 }
 
-init();
+//init();
 
 module.exports = appRouter;
