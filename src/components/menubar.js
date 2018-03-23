@@ -7,6 +7,7 @@ class MenuBar extends Component {
       <div className="menubar">
       <ul>
         <li><Link className="" to="/"> Home </Link></li>
+        <li><Link className="" to="/pipelineview"> Pipeline View </Link></li>
         <li><Link className="" to="/admin"> Admin </Link></li>
         <li><Link className="" to="/about"> About </Link></li>
       </ul>
