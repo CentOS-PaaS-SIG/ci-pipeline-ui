@@ -15,7 +15,6 @@ class PipelineMain extends Component {
               <th>Details</th>
               <th>AllRuns</th>
               <th>Jenkins View </th>
-              <th>Run View</th>
             </tr>
           </thead>
           <PipelinesIndex>

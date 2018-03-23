@@ -56,13 +56,6 @@ class PipelinesIndex extends Component {
               </Link>
             </button>
           </td>
-          <td>
-            <button type="button" className="btn btn-default btn-sm">
-              <Link to={`/pipelines/${pipeline_name}/runview`}>
-                Run View
-              </Link>
-            </button>
-          </td>
         </tr>
     );
   }
