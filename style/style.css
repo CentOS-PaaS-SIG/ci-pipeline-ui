@@ -130,24 +130,29 @@ table {
 }
 
 .greencolordiv {
-	color: #def8de;
+	color: #333;
   background-color: #def8de;
+  text-align: center;
 }
 .greencolordiv:hover {
 	color: #333;
 	/*background-color: rgba(142, 213, 87, 0.6);*/
   /*background: radial-gradient(ellipse ,#def8de 80%, white);*/
   background-color: rgba(222,248,222, 0.6);
+  text-align: center;
 }
 
 .redcolordiv {
 	color: #333;
   background-color: #ffe5e5;
+  text-align: center;
 }
 .redcolordiv:hover {
 	color: #333;
 	background-color: rgba(255,229,229, 0.6);
+  text-align: center;
 }
+
 
 
 /* flip cards  */
@@ -159,7 +164,14 @@ table {
   width: 100px;
   height: 100px;
 }
+td {
+  padding: 2px;
+  text-align: left;
+}
 
+.textcenter {
+    text-align: center;
+}
 div.wordwrap {
     width: 140px;
     border: 1px solid #000000;

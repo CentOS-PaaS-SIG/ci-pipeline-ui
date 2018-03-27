@@ -51,19 +51,19 @@ class PipelineJenkinsview extends Component {
     let secs = date.getUTCSeconds()
     let mills = date.getUTCMilliseconds()
     if (hrs > 0){
-      str += hrs + " hrs ";
+      str += hrs + "hr ";
     }
     if (mins > 0){
-      str += mins + " min ";
+      str += mins + "m ";
     }
     if (secs > 0){
-      str += secs + " s ";
+      str += secs + "s ";
     }
-    if (mills > 0){
-      str += mills + " ms ";
+    else if (mills > 0){
+      str += mills + "ms ";
     }
     return (
-      <span className="label label-default">{str}</span>
+      <span>{str}</span>
     );
   }
 
@@ -129,12 +129,11 @@ class PipelineJenkinsview extends Component {
     return rowHeaders;
   }
   renderHeaders(rowHeaders){
-    //console.log("inside row headers");
-    //console.log(rowHeaders);
+
     var headers = _.map(rowHeaders, rh => {
       //console.log(rh);
       return (
-        <th key={rh.id} className="wordwrap">
+        <th key={rh.id} className="wordwrap textcenter">
           <div className="">
             <div className="jcardcontainer">
               {rh.name}
@@ -143,7 +142,6 @@ class PipelineJenkinsview extends Component {
         </th>
       );
     });
-    //console.log(headers);
     return headers;
   }
 
