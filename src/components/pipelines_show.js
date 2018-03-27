@@ -40,6 +40,32 @@ class PipelinesShow extends Component {
     );
   }
 
+  renderTime(duration){
+    var date = new Date(duration);
+
+    console.log(duration);
+    var str = '';
+    let hrs = date.getUTCHours();
+    let mins = date.getUTCMinutes()
+    let secs = date.getUTCSeconds()
+    let mills = date.getUTCMilliseconds()
+    if (hrs > 0){
+      str += hrs + "hr ";
+    }
+    if (mins > 0){
+      str += mins + "m ";
+    }
+    if (secs > 0){
+      str += secs + "s ";
+    }
+    else if (mills > 0){
+      str += mills + "ms ";
+    }
+    return (
+      <span>{str}</span>
+    );
+  }
+
   render(){
     const { pipeline } = this.props;
     if (!pipeline){
@@ -68,15 +94,7 @@ class PipelinesShow extends Component {
                 <h4> Name of pipeline: </ h4>
               </td>
               <td>
-               <h4> { pipeline.displayName } </ h4>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <h4> Organization: </ h4>
-              </td>
-              <td>
-               <h4> { pipeline.organization } </ h4>
+                   <h4> {pipeline.name} </h4>
               </td>
             </tr>
             <tr>
@@ -84,7 +102,7 @@ class PipelinesShow extends Component {
                 <h4> Estimated Duration </ h4>
               </td>
               <td>
-               <h4> { pipeline.estimatedDurationInMillis} </ h4>
+                <h4> { pipeline.estimatedDurationInMillis } </h4>
               </td>
             </tr>
             <tr>
@@ -92,7 +110,7 @@ class PipelinesShow extends Component {
                 <h4> WeatherScore: </ h4>
               </td>
               <td>
-               <h4> { pipeline.weatherScore } </ h4>
+                <h4> { pipeline.weatherScore } </h4>
               </td>
             </tr>
             <tr>
@@ -111,11 +129,7 @@ class PipelinesShow extends Component {
                 <h4> Commit id </ h4>
               </td>
               <td>
-                {pipeline.latestRun.commitId ? (
                   <h4> {pipeline.latestRun.commitId} </h4>
-                ) : (
-                  <h4> undefined </h4>
-                )}
               </td>
             </tr>
             <tr>
@@ -136,7 +150,7 @@ class PipelinesShow extends Component {
               </td>
               <td>
                 {pipeline.latestRun.durationInMillis ? (
-                  <h4> {pipeline.latestRun.durationInMillis}</h4>
+                  <h4> {this.renderTime(pipeline.latestRun.durationInMillis)}</h4>
                 ) : (
                   <h4> undefined </h4>
                 )}
