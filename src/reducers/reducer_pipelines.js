@@ -6,14 +6,18 @@ import { FETCH_PIPELINE_RUNVIEW } from '../actions';
 import { FETCH_PIPELINE_LATESTRUN } from '../actions';
 import { FETCH_PIPELINE_RUN_ARTIFACTS } from '../actions';
 import { FETCH_PIPELINE_JENKINSVIEW } from '../actions';
+import { FETCH_PIPELINE_VIEWS } from '../actions';
+import { FETCH_PIPELINE_VIEW_BY_NAME } from '../actions';
 
 
 export default function(state = {}, action){
   switch (action.type){
+    case FETCH_PIPELINE_VIEW_BY_NAME:
+      return { ...state, "pipelineview": action.payload.data }
     case FETCH_PIPELINES:
       return _.mapKeys(action.payload.data, 'name');
-    case FETCH_PIPELINE:
-      return { ...state, [action.payload.data.name]: action.payload.data }
+    case FETCH_PIPELINE_VIEWS:
+      return { ...state, "pipelineviews": action.payload.data }
     case FETCH_PIPELINE_RUNS:
       return { ...state, "pipelineruns": action.payload.data }
     case FETCH_PIPELINE_RUNVIEW:

@@ -1,3 +1,4 @@
+export const FETCH_PIPELINE_VIEWS = 'fetch_pipeline_views';
 export const FETCH_PIPELINES = 'fetch_pipelines';
 export const FETCH_PIPELINE = 'fetch_pipeline';
 export const FETCH_PIPELINE_RUNS = 'fetch_pipeline_runs';
@@ -5,9 +6,30 @@ export const FETCH_PIPELINE_RUN = 'fetch_pipeline_run';
 export const FETCH_PIPELINE_RUNVIEW = 'fetch_pipeline_runview';
 export const FETCH_PIPELINE_LATESTRUN = 'fetch_pipeline_latestrun';
 export const FETCH_PIPELINE_JENKINSVIEW = 'fetch_pipeline_jenkinsview';
-export const FETCH_PIPELINE_RUN_ARTIFACTS = 'fetch_pipeline_run_artifacts'
+export const FETCH_PIPELINE_RUN_ARTIFACTS = 'fetch_pipeline_run_artifacts';
+export const FETCH_PIPELINE_VIEW_BY_NAME = 'fetch_pipeline_view_by_name';
+export const FETCH_PIPELINE_BY_NAME = 'fetch_pipeline_by_name';
+
+
 var CONFIG = require("../constants/config")
 import axios from 'axios';
+
+export function fetchPipelineViewByName(name) {
+  const request = axios.get(`${CONFIG.getRESTURL()}/pipelines/views/${name}`);
+  return {
+    type: FETCH_PIPELINE_VIEW_BY_NAME,
+    payload: request
+  };
+}
+
+export function fetchPipelineViews() {
+  const request = axios.get(`${CONFIG.getRESTURL()}/pipelines/views`);
+
+  return {
+    type: FETCH_PIPELINE_VIEWS,
+    payload: request
+  };
+}
 
 export function fetchPipelines() {
   const request = axios.get(`${CONFIG.getRESTURL()}/pipelines`);
@@ -67,9 +89,7 @@ export function fetchPipelineRunArtifacts(id, runId) {
 }
 
 export function fetchPipelineJenkinsview(id) {
-  console.log("Inside actions");
   const request = axios.get(`${CONFIG.getRESTURL()}/pipelines/${id}/wfapi`);
-
   return {
     type: FETCH_PIPELINE_JENKINSVIEW,
     payload: request
