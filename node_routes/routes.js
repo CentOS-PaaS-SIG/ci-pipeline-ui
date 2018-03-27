@@ -144,11 +144,11 @@ var appRouter = function (app) {
       var returnData = getPipelineViews();
       returnData["promise"].then(function(data){
         setCacheData(request_url, data['data']);
-        res.status(200).send(data['data']);
+        res.status(200).send(data['data']['views']);
       });
     }
     else{
-      res.status(200).send(responseData);
+      res.status(200).send(responseData['views']);
     }
   });
 
