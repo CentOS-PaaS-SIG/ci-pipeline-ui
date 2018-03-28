@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchPipelineViewByName } from '../actions';
 import { Table } from 'reactstrap';
-import WeatherIcon from './weather_icon';
 
 class PipelineViewcon extends Component {
   componentWillMount() {
@@ -10,36 +9,61 @@ class PipelineViewcon extends Component {
   }
 
   renderRows(){
-    return _.map(this.props.pipelines.pipelineview.jobs, function(job, index) {
+    return _.map(this.props.pipelines.pipelineview.jobDetails, function(job, index) {
       var pvjob = `pvjob-${index}`;
       console.log(job);
       return(
         <tr key={pvjob}>
         <td>{index}</td>
         <td>
-
           {
-          job.color == 'blue' &&
+          job.latestRun && job.latestRun.result == 'SUCCESS' && job.latestRun.state == 'FINISHED' &&
           <img src="/static/green.png" alt="Smiley face" height="32" width="32">
           </img>
           }
           {
-          job.color == 'red' &&
+          job.latestRun && job.latestRun.result == 'FAILURE' && job.latestRun.state == 'FINISHED' &&
           <img src="/static/red.png" alt="Smiley face" height="32" width="32">
           </img>
           }
           {
-          (job.color == 'disabled' || job.color == 'notbuilt' || job.color == 'aborted') &&
+          job.latestRun == null &&
           <img src="/static/disabled.png" alt="Smiley face" height="32" width="32">
           </img>
           }
           {
-          job.color == 'blue_anime' &&
+          job.latestRun && job.latestRun.state == 'UNKNOWN' && job.latestRun.state == "QUEUED" &&
           <img src="/static/blue_anime.gif" alt="Smiley face" height="32" width="32">
           </img>
           }
         </td>
-        <td> <WeatherIcon /> </td>
+        <td>
+          {
+          job.weatherScore < 20 &&
+          <img src="/static/health-00to19.png" alt="Smiley face" height="32" width="32">
+          </img>
+          }
+          {
+          job.weatherScore >= 20 && job.weatherScore < 40 &&
+          <img src="/static/health-20to39.png" alt="Smiley face" height="32" width="32">
+          </img>
+          }
+          {
+          job.weatherScore >= 40 && job.weatherScore < 60 &&
+          <img src="/static/health-40to59.png" alt="Smiley face" height="32" width="32">
+          </img>
+          }
+          {
+          job.weatherScore >= 60 && job.weatherScore < 79 &&
+          <img src="/static/health-60to79.png" alt="Smiley face" height="32" width="32">
+          </img>
+          }
+          {
+          job.weatherScore >= 80 &&
+          <img src="/static/health-80plus.png" alt="Smiley face" height="32" width="32">
+          </img>
+          }
+        </td>
         <td>{job.name}</td>
         <td><a href={job.url}> Open Jenkins </a></td>
         </tr>
@@ -48,8 +72,6 @@ class PipelineViewcon extends Component {
   }
 
   render(){
-    //console.log("inside render of pipelineview content");
-    //console.log(this.props);
     if(this.props.viewname && this.props.pipelines.pipelineview){
       return(
         <div>
