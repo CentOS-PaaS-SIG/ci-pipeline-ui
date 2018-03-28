@@ -153,14 +153,29 @@ var appRouter = function (app) {
   });
 
   app.get("/pipelines/views/:id", function(req, res){
-    var request_url = req.headers.host+req.url;
 
+    var request_url = req.headers.host+req.url;
     var responseData = getCacheData(request_url);
     if (responseData === false){
       var returnData = getPipelineViewByName(req.params.id);
       returnData["promise"].then(function(data){
-        setCacheData(request_url, data['data']);
-        res.status(200).send(data['data']);
+        //setCacheData(request_url, data['data']);
+        var runData = data['data'];
+        runData["jobDetails"] = [];
+        var runPromises = [];
+        for( index in data['data']['jobs']){
+          console.log(data['data']['jobs'][index]['name']);
+          runPromises.push(getPipelineDetails(data['data']['jobs'][index]['name'])["promise"]);
+        }
+        axios.all(runPromises).then(function(results) {
+          let temp = results.map(r => r.data);
+          runData["jobDetails"] = temp;
+          setCacheData(request_url, runData);
+          res.status(200).send(runData);
+        }).catch(error => {
+            log.error("Error for request url "+request_url);
+            console.log(error.response)
+        });
       });
     }
     else{
