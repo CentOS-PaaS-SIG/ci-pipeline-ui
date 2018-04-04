@@ -13,21 +13,21 @@ var log = bunyan.createLogger({
   streams: [
     {
       level: 'info',
-      path: 'ci-ui-info.log',
+      path: '/tmp/ci-ui-info.log',
       type: 'rotating-file',
       period: '1d',
       count: 3
     },
     {
       level: 'error',
-      path: 'ci-ui-error-warning.log',
+      path: '/tmp/ci-ui-error-warning.log',
       type: 'rotating-file',
       period: '1d',
       count: 3
     },
     {
       level: 'debug',
-      path: 'ci-ui-debug.log',
+      path: '/tmp/ci-ui-debug.log',
       type: 'rotating-file',
       period: '1d',
       count: 3
