@@ -24,7 +24,7 @@ class PipelineView extends Component {
       var pvindex = `pvtabp-${index}`;
       return(
         <TabPanel key={pvindex}>
-          <h2> <PipelineViewcon viewname={pv.name}/></h2>
+           <PipelineViewcon viewname={pv.name}/>
         </TabPanel>
       );
     });
@@ -49,10 +49,10 @@ class PipelineView extends Component {
           <Tab>Title 2</Tab>
         </TabList>
         <TabPanel>
-          <h2> <PipelineViewcon /></h2>
+          <PipelineViewcon />
         </TabPanel>
         <TabPanel>
-          <h2><PipelineViewcon /></h2>
+          <PipelineViewcon />
         </TabPanel>
       </Tabs>
     );

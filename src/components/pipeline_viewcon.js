@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchPipelineViewByName } from '../actions';
 import { Table } from 'reactstrap';
+import { Link } from 'react-router-dom';
+
 
 class PipelineViewcon extends Component {
   componentWillMount() {
@@ -66,6 +68,9 @@ class PipelineViewcon extends Component {
         </td>
         <td>{job.name}</td>
         <td><a href={job.url}> Open Jenkins </a></td>
+        <td><a href={job.url}> Details </a></td>
+        <td><a href={job.url}> All Runs </a></td>
+        <td><a href={job.url}> Jenkins views </a></td>
         </tr>
       );
     });
@@ -83,6 +88,9 @@ class PipelineViewcon extends Component {
               <th>Weather </th>
               <th>Name</th>
               <th>Jenkins URL</th>
+              <th>Details</th>
+              <th>All Runs</th>
+              <th>Jenkins View</th>
             </tr>
           </thead>
           <tbody>
