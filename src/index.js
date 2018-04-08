@@ -31,7 +31,7 @@ ReactDOM.render(
           <Route path="/pipelines/:id/jenkinsview" component={PipelineJenkinsview} />
           <Route path="/pipelines/:id/latestrun" component={PipelineLatestrun} />
           <Route path="/pipelines/:id/runview" component={PipelineRunview} />
-          <Route path="/pipeline/:id/details" component={PipelineDetail} />
+          <Route path="/pipeline/:id/detail" component={PipelineDetail} />
           <Route path="/pipelines/:id/runs" component={PipelineRuns} />
 	        <Route path="/pipelines/:id" component={PipelinesShow} />
 	        <Route path="/about" component={About} />

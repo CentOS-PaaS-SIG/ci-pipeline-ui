@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import { FETCH_PIPELINES } from '../actions';
+import { FETCH_PIPELINE_DETAIL } from '../actions';
 import { FETCH_PIPELINE } from '../actions';
 import { FETCH_PIPELINE_RUNS } from '../actions';
 import { FETCH_PIPELINE_RUNVIEW } from '../actions';
@@ -12,8 +13,11 @@ import { FETCH_PIPELINE_VIEW_BY_NAME } from '../actions';
 
 export default function(state = {}, action){
   switch (action.type){
+
     case FETCH_PIPELINE_VIEW_BY_NAME:
       return { ...state, "pipelineview": action.payload.data }
+    case FETCH_PIPELINE_DETAIL:
+      return { ...state, "pipelinedetail": action.payload.data }
     case FETCH_PIPELINES:
       return _.mapKeys(action.payload.data, 'name');
     case FETCH_PIPELINE_VIEWS:
@@ -23,8 +27,6 @@ export default function(state = {}, action){
     case FETCH_PIPELINE_RUNVIEW:
       return { ...state, "pipelinerunview": action.payload.data }
     case FETCH_PIPELINE_JENKINSVIEW:
-      console.log("Inside the jenkins view reducer");
-      console.log(action.payload.data);
       return { ...state, "pipelinejenkinsview": action.payload.data }
     case FETCH_PIPELINE_LATESTRUN:
       return { ...state, "pipelinelatestrun": [action.payload.data] }
