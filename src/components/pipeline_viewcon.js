@@ -68,9 +68,27 @@ class PipelineViewcon extends Component {
         </td>
         <td>{job.name}</td>
         <td><a href={job.url}> Open Jenkins </a></td>
-        <td><a href={job.url}> Details </a></td>
-        <td><a href={job.url}> All Runs </a></td>
-        <td><a href={job.url}> Jenkins views </a></td>
+        <td>
+          <button type="button" className="btn btn-default btn-sm">
+            <Link to={`/pipeline/${job.name}/details`}>
+              Details
+            </Link>
+          </button>
+        </td>
+        <td>
+          <button type="button" className="btn btn-default btn-sm">
+            <Link to={`/pipelines/${job.name}/runs`}>
+              All Runs
+            </Link>
+          </button>
+        </td>
+        <td>
+          <button type="button" className="btn btn-default btn-sm">
+            <Link to={`/pipelines/${job.name}/jenkinsview`}>
+              Jenkins View
+            </Link>
+          </button>
+        </td>
         </tr>
       );
     });
