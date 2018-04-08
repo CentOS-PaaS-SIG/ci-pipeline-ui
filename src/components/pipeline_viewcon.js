@@ -13,7 +13,7 @@ class PipelineViewcon extends Component {
   renderRows(){
     return _.map(this.props.pipelines.pipelineview.jobDetails, function(job, index) {
       var pvjob = `pvjob-${index}`;
-      console.log(job);
+      //console.log(job);
       return(
         <tr key={pvjob}>
         <td>{index}</td>

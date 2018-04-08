@@ -3,9 +3,7 @@ import Flipcard from './flipcard';
 
 class About extends Component {
   render(){
-    console.log("inside about");
-    console.log(process.env);
-    console.log("starting render");
+
     return(
       <div className="table-responsive">
         <table className="table-bordered table-hover">
