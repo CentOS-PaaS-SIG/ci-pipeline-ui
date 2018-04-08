@@ -36,7 +36,7 @@ ReactDOM.render(
 	        <Route path="/pipelines/:id" component={PipelinesShow} />
 	        <Route path="/about" component={About} />
           <Route path="/pipelineview" component={PipelineView} />
-	        <Route path="/" component={PipelineMain} />
+	        <Route path="/" component={PipelineView} />
         </Switch>
 	      <Footer />
 	    </div>

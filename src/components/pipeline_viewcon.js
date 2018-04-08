@@ -70,7 +70,7 @@ class PipelineViewcon extends Component {
         <td><a href={job.url}> Open Jenkins </a></td>
         <td>
           <button type="button" className="btn btn-default btn-sm">
-            <Link to={`/pipeline/${job.name}/details`}>
+            <Link to={`/pipeline/${job.name}/detail`}>
               Details
             </Link>
           </button>

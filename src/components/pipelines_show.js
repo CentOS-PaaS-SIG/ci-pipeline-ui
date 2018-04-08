@@ -43,7 +43,7 @@ class PipelinesShow extends Component {
   renderTime(duration){
     var date = new Date(duration);
 
-    console.log(duration);
+    //console.log(duration);
     var str = '';
     let hrs = date.getUTCHours();
     let mins = date.getUTCMinutes()
