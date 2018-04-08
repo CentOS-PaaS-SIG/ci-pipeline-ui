@@ -17,6 +17,7 @@ import PipelineRunview from './components/pipeline_runview';
 import PipelineLatestrun from './components/pipeline_latestrun';
 import PipelineJenkinsview from './components/pipeline_jenkinsview';
 import PipelineView from './components/pipeline_view';
+import PipelineDetail from './components/pipeline_detail';
 
 const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
 
@@ -30,6 +31,7 @@ ReactDOM.render(
           <Route path="/pipelines/:id/jenkinsview" component={PipelineJenkinsview} />
           <Route path="/pipelines/:id/latestrun" component={PipelineLatestrun} />
           <Route path="/pipelines/:id/runview" component={PipelineRunview} />
+          <Route path="/pipeline/:id/details" component={PipelineDetail} />
           <Route path="/pipelines/:id/runs" component={PipelineRuns} />
 	        <Route path="/pipelines/:id" component={PipelinesShow} />
 	        <Route path="/about" component={About} />
