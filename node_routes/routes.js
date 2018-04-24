@@ -230,6 +230,26 @@ var appRouter = function (app) {
     }
   });
 
+  app.get("/pipelines/:id/runs/:runid/nodes/", function(req, res) {
+    var request_url = req.headers.host+req.url;
+    console.log(req.params);
+    var responseData = getCacheData(request_url);
+    if (responseData === false){
+      var returnData = getPipelineRunNodes(req.params.id, req.params.runid);
+      returnData["promise"].then(function(data){
+        setCacheData(request_url, data['data']);
+        res.status(200).send(data['data']);
+      }).catch(error => {
+            console.log("Error occured for URL "+request_url);
+            res.send(error.response);
+          });
+    }
+    else{
+      res.status(200).send(responseData);
+    }
+  });
+
+
   app.get("/pipelines/:id/runs/:runid/nodes/:nodeid", function(req, res) {
     var request_url = req.headers.host+req.url;
     console.log(req.params);
