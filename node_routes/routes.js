@@ -47,7 +47,7 @@ myCache.on( "del", function( key, value ){
 function setCacheData(url, data, timeout = 1000){
   console.log("setting cachefor ");
   console.log("http://"+url);
-  var status = myCache.set( "http://"+url , data, timeout);
+  var status = myCache.set("http://"+url , data, timeout);
   return status;
 }
 
@@ -71,8 +71,6 @@ function formatReturnData(rqurl, promise){
   returnData["promise"] = promise;
   return returnData;
 }
-
-
 
 function getPipelines(){
   return formatReturnData(ROOT_URL, axios.get(ROOT_URL, { responseType: 'json' }));
@@ -130,10 +128,37 @@ function getPipelineWFAPI(name){
   return formatReturnData(REQ_URL, axios.get(REQ_URL, { responseType: 'json' }));
 }
 
+function getPipelineNodeDetails(name, runId, nodeId ){
+  //https://jenkins-continuous-infra.apps.ci.centos.org//blue/rest/organizations/jenkins/pipelines/ci-stage-pipeline-f27/runs/486/nodes/14/
+  //{ROOT_URL}/pipelinename/runs/runid/nodes/nodeid
+  var REQ_URL = ROOT_URL+name+'/runs/'+runId+'/nodes/'+nodeId+'/';
+  return formatReturnData(REQ_URL, axios.get(REQ_URL, { responseType: 'json' }));
+}
+
+function getPipelineNodeSteps(name, runId, nodeId ){
+  // https://jenkins-continuous-infra.apps.ci.centos.org/blue/rest/organizations/jenkins/pipelines/ci-stage-pipeline-f27/runs/486/nodes/62/steps/
+  //{ROOT_URL}/pipelinename/runs/runid/nodes/nodeid/steps
+  var REQ_URL = ROOT_URL+name+'/runs/'+runId+'/nodes/'+nodeId+'/steps';
+  return formatReturnData(REQ_URL, axios.get(REQ_URL, { responseType: 'json' }));
+}
+
+function getPipelineNodeStepDetails(name, runId, nodeId, stepId ){
+  // https://jenkins-continuous-infra.apps.ci.centos.org/blue/rest/organizations/jenkins/pipelines/ci-stage-pipeline-f27/runs/486/nodes/62/steps/
+  //{ROOT_URL}/pipelinename/runs/runid/nodes/nodeid/steps
+  var REQ_URL = ROOT_URL+name+'/runs/'+runId+'/nodes/'+nodeId+'/steps/'+stepId;
+  return formatReturnData(REQ_URL, axios.get(REQ_URL, { responseType: 'json' }));
+}
+
+function getPipelineNodeStepLog(name, runId, nodeId, stepId){
+  //https://jenkins-continuous-infra.apps.ci.centos.org/blue/rest/organizations/jenkins/pipelines/ci-stage-pipeline-f27/runs/486/nodes/62/steps/65/log/
+  //{ROOT_URL}/pipelinename/runs/runid/nodes/nodeid/steps/stepId/log
+  var REQ_URL = ROOT_URL+name+'/runs/'+runId+'/nodes/'+nodeId+'/steps/'+stepId+'/log/';
+  return formatReturnData(REQ_URL, axios.get(REQ_URL, { responseType: 'json' }));
+}
+
+
 var appRouter = function (app) {
   app.get("/", function(req, res){
-    //log.info("request recieved");
-    //log.info(request_url);
     res.status(200).send("Welcome to our ci-pipeline restful API");
   });
 
@@ -145,7 +170,10 @@ var appRouter = function (app) {
       returnData["promise"].then(function(data){
         setCacheData(request_url, data['data']);
         res.status(200).send(data['data']['views']);
-      });
+      }).catch(error => {
+            console.log("Error occured for URL "+request_url);
+            res.send(error.response);
+          });
     }
     else{
       res.status(200).send(responseData['views']);
@@ -185,8 +213,6 @@ var appRouter = function (app) {
 
   app.get("/pipelines/:id/runs/:runid/artifacts", function(req, res) {
     var request_url = req.headers.host+req.url;
-    //log.info("request recieved");
-    //log.info(request_url);
     // fetch from cache
     var responseData = getCacheData(request_url);
     if (responseData === false){
@@ -194,24 +220,105 @@ var appRouter = function (app) {
       returnData["promise"].then(function(data){
         setCacheData(request_url, data['data']);
         res.status(200).send(data['data']);
-      });
+      }).catch(error => {
+            console.log("Error occured for URL "+request_url);
+            res.send(error.response);
+          });
     }
     else{
       res.status(200).send(responseData);
     }
   });
 
-  app.get("/pipelines/:id/runs/:runid/nodes", function(req, res) {
+  app.get("/pipelines/:id/runs/:runid/nodes/:nodeid", function(req, res) {
+    var request_url = req.headers.host+req.url;
+    console.log(req.params);
+    var responseData = getCacheData(request_url);
+    if (responseData === false){
+      var returnData = getPipelineNodeDetails(req.params.id, req.params.runid, req.params.nodeid);
+      returnData["promise"].then(function(data){
+        setCacheData(request_url, data['data']);
+        res.status(200).send(data['data']);
+      }).catch(error => {
+            console.log("Error occured for URL "+request_url);
+            res.send(error.response);
+          });
+    }
+    else{
+      res.status(200).send(responseData);
+    }
+  });
+
+  app.get("/pipelines/:id/runs/:runid/nodes/:nodeid/steps", function(req, res) {
+    var request_url = req.headers.host+req.url;
+    // fetch from cache
+    var responseData = getCacheData(request_url);
+    if (responseData === false){
+      var returnData = getPipelineNodeSteps(req.params.id, req.params.runid, req.params.nodeid);
+      returnData["promise"].then(function(data){
+        setCacheData(request_url, data['data']);
+        res.status(200).send(data['data']);
+      }).catch(error => {
+            console.log("Error occured for URL "+request_url);
+            console.log(error.response);
+            res.send(error.response.data);
+          });
+    }
+    else{
+      res.status(200).send(responseData);
+    }
+  });
+
+  app.get("/pipelines/:id/runs/:runid/nodes/:nodeid/steps/:stepid", function(req, res) {
     var request_url = req.headers.host+req.url;
     //log.info("request recieved");
     //log.info(request_url);
     // fetch from cache
     var responseData = getCacheData(request_url);
     if (responseData === false){
-      var returnData = getPipelineRunNodes(req.params.id, req.params.runid);
+      var returnData = getPipelineNodeStepDetails(req.params.id, req.params.runid, req.params.nodeid, req.params.stepid);
       returnData["promise"].then(function(data){
         setCacheData(request_url, data['data']);
         res.status(200).send(data['data']);
+      }).catch(error => {
+            console.log("Error occured for URL "+request_url);
+            res.send(error.response.data);
+          });
+    }
+    else{
+      res.status(200).send(responseData);
+    }
+  });
+
+  app.get("/pipelines/:id/runs/:runid/nodes/:nodeid/steps/:stepid", function(req, res) {
+    var request_url = req.headers.host+req.url;
+    var responseData = getCacheData(request_url);
+    if (responseData === false){
+      var returnData = getPipelineNodeStepDetails(req.params.id, req.params.runid, req.params.nodeid, req.params.stepid);
+      returnData["promise"].then(function(data){
+        setCacheData(request_url, data['data']);
+        res.status(200).send(data['data']);
+      }).catch(error => {
+            console.log("Error occured for URL "+request_url);
+            res.send(error.response.data);
+          });
+    }
+    else{
+      res.status(200).send(responseData);
+    }
+  });
+
+  app.get("/pipelines/:id/runs/:runid/nodes/:nodeid/steps/:stepid/log", function(req, res) {
+    var request_url = req.headers.host+req.url;
+    var responseData = getCacheData(request_url);
+    if (responseData === false){
+      var returnData = getPipelineNodeStepLog(req.params.id, req.params.runid, req.params.nodeid, req.params.stepid);
+      returnData["promise"].then(function(data){
+        setCacheData(request_url, data['data']);
+        res.status(200).send(data['data']);
+      }).catch(error => {
+            console.log("Error occured for URL "+request_url);
+            res.send(error.response.data);
       });
     }
     else{
@@ -221,16 +328,34 @@ var appRouter = function (app) {
 
   app.get("/pipelines/:id/runs/:runid", function(req, res) {
     var request_url = req.headers.host+req.url;
-    //log.info("request recieved");
-    //log.info(request_url);
-    // fetch from cache
     var responseData = getCacheData(request_url);
     if (responseData === false){
       var returnData = getPipelineRunByID(req.params.id, req.params.runid);
       returnData["promise"].then(function(data){
         setCacheData(request_url, data['data']);
         res.status(200).send(data['data']);
+      }).catch(error => {
+            console.log("Error occured for URL "+request_url);
+            res.send(error.response.data);
       });
+    }
+    else{
+      res.status(200).send(responseData);
+    }
+  });
+
+  app.get("/pipelines/:id/runs/:runid/nodes/:nodeId", function(req, res) {
+    var request_url = req.headers.host+req.url;
+    var responseData = getCacheData(request_url);
+    if (responseData === false){
+      var returnData = getPipelineRunByID(req.params.id, req.params.runid);
+      returnData["promise"].then(function(data){
+        setCacheData(request_url, data['data']);
+        res.status(200).send(data['data']);
+      }).catch(error => {
+            console.log("Error occured for URL "+request_url);
+            res.send(error.response.data);
+          });
     }
     else{
       res.status(200).send(responseData);
@@ -245,6 +370,9 @@ var appRouter = function (app) {
       returnData["promise"].then(function(data){
         setCacheData(request_url, data['data']);
         res.status(200).send(data['data']);
+      }).catch(error => {
+            console.log("Error occured for URL "+request_url);
+            res.send(error.response.data);
       });
     }
     else{
@@ -254,9 +382,6 @@ var appRouter = function (app) {
 
   app.get("/pipelines/:id/runview", function(req, res) {
     var request_url = req.headers.host+req.url;
-    //log.info("request recieved");
-    //log.info(request_url);
-    // fetch from cache
     var responseData = getCacheData(request_url);
     if (responseData === false){
       var returnData = getPipelineRunview(req.params.id);
@@ -324,7 +449,10 @@ var appRouter = function (app) {
       returnData["promise"].then(function(data){
         setCacheData(request_url, data['data']);
         res.status(200).send(data['data']);
-      });
+      }).catch(error => {
+            console.log("Error occured for URL "+request_url);
+            res.send(error.response.data);
+          });
     }
     else{
       res.status(200).send(responseData);
@@ -342,6 +470,9 @@ var appRouter = function (app) {
       returnData["promise"].then(function(data){
         setCacheData(request_url, data['data']);
         res.status(200).send(data['data']);
+      }).catch(error => {
+            console.log("Error occured for URL "+request_url);
+            res.send(error.response.data);
       });
     }
     else{
@@ -360,6 +491,9 @@ var appRouter = function (app) {
       returnData["promise"].then(function(data){
         setCacheData(request_url, data['data']);
         res.status(200).send(data['data']);
+      }).catch(error => {
+            console.log("Error occured for URL "+request_url);
+            res.send(error.response.data);
       });
     }
     else{
@@ -369,7 +503,6 @@ var appRouter = function (app) {
 
   app.get("/pipelines", function(req, res) {
     var request_url = req.headers.host+req.url;
-    //console.log(request_url);
     // fetch from cache
     var responseData = getCacheData(request_url);
     console.log(responseData);
@@ -380,8 +513,6 @@ var appRouter = function (app) {
         var names = [];
         var i = 1;
         for (index in data["data"]){
-          //console.log(data["data"][index]["displayName"]);
-          //console.log(PIPELINE_BLACKLIST.indexOf(data["data"][index]["displayName"]));
           if (PIPELINE_BLACKLIST.indexOf(data["data"][index]["displayName"]) === -1){
             var dict = {};
             dict["id"] = i;
@@ -397,10 +528,11 @@ var appRouter = function (app) {
             i = i+1;
           }
         }
-        //console.log("priniting pipeline names");
-        //console.log(names);
         setCacheData(request_url, names);
         res.status(200).send(names);
+      }).catch(error => {
+            console.log("Error occured for URL "+request_url);
+            res.send(error.response.data);
       });
     }
     else{
@@ -412,23 +544,23 @@ var appRouter = function (app) {
 function init(){
   axios.get("http://localhost:3000/pipelines", { responseType: 'json' }).then(function(data){
     console.log("initialising the cache for http://localhost:3000/pipelines");
-    setCacheData("http://localhost:3000/pipelines", data['data']);
-    var pipelines = getCacheData("http://localhost:3000/pipelines");
-    for (index in pipelines){
-      console.log(pipelines[index]["name"]);
-      RUNVIEW_URL = "http://localhost:3000/pipelines/"+pipelines[index]["name"]+"/runview";
-      //console.log(RUNVIEW_URL);
-      axios.get(RUNVIEW_URL, { responseType: 'json' }).then(function(data){
-        console.log("Initialising the cache for RUNVIEW URL "+RUNVIEW_URL);
-        setCacheData(RUNVIEW_URL, data['data']);
-      }).catch(error => {
-        console.log("Error occured for URL "+RUNVIEW_URL);
-        //console.log(error.response);
-      });
-    }
+    setCacheData("localhost:3000/pipelines", data['data']);
+    //var pipelines = getCacheData("http://localhost:3000/pipelines");
+    // for (index in pipelines){
+    //   console.log(pipelines[index]["name"]);
+    //   RUNVIEW_URL = "http://localhost:3000/pipelines/"+pipelines[index]["name"]+"/runview";
+    //   console.log(RUNVIEW_URL);
+    //    axios.get(RUNVIEW_URL, { responseType: 'json' }).then(function(data){
+    //      console.log("Initialising the cache for RUNVIEW URL "+RUNVIEW_URL);
+    //      setCacheData(RUNVIEW_URL, data['data']);
+    //    }).catch(error => {
+    //      console.log("Error occured for URL "+RUNVIEW_URL);
+    //      console.log(error.response);
+    //    });
+    // }
   });
 }
 
-//init();
+init();
 
 module.exports = appRouter;
