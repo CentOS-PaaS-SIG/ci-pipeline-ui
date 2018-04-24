@@ -9,6 +9,7 @@ import { FETCH_PIPELINE_RUN_ARTIFACTS } from '../actions';
 import { FETCH_PIPELINE_JENKINSVIEW } from '../actions';
 import { FETCH_PIPELINE_VIEWS } from '../actions';
 import { FETCH_PIPELINE_VIEW_BY_NAME } from '../actions';
+import { FETCH_PIPELINE_RUN_NODES } from '../actions';
 
 
 export default function(state = {}, action){
@@ -16,6 +17,8 @@ export default function(state = {}, action){
 
     case FETCH_PIPELINE_VIEW_BY_NAME:
       return { ...state, "pipelineview": action.payload.data }
+    case FETCH_PIPELINE_RUN_NODES:
+      return { ...state, "pipelinerunnodes": action.payload.data }
     case FETCH_PIPELINE_DETAIL:
       return { ...state, "pipelinedetail": action.payload.data }
     case FETCH_PIPELINES:

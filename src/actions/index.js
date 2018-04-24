@@ -9,11 +9,20 @@ export const FETCH_PIPELINE_JENKINSVIEW = 'fetch_pipeline_jenkinsview';
 export const FETCH_PIPELINE_RUN_ARTIFACTS = 'fetch_pipeline_run_artifacts';
 export const FETCH_PIPELINE_VIEW_BY_NAME = 'fetch_pipeline_view_by_name';
 export const FETCH_PIPELINE_BY_NAME = 'fetch_pipeline_by_name';
-export const FETCH_PIPELINE_DETAIL = 'fetch_pipeline_detail'
+export const FETCH_PIPELINE_DETAIL = 'fetch_pipeline_detail';
+export const FETCH_PIPELINE_RUN_NODES = 'fetch_pipeline_run_nodes';
 
 const HEADERS = {}
 var CONFIG = require("../constants/config")
 import axios from 'axios';
+
+export function fetchPipelineRunNodes(name, runid) {
+  const request = axios.get(`${CONFIG.getRESTURL()}/pipelines/${name}/runs/${runid}/nodes`);
+  return {
+    type: FETCH_PIPELINE_RUN_NODES,
+    payload: request
+  };
+}
 
 export function fetchPipelineDetail(name) {
   const request = axios.get(`${CONFIG.getRESTURL()}/pipelines/${name}`);

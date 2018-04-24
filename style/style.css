@@ -217,3 +217,151 @@ div.wordwrap {
   color: white;
   transform: rotateY( 180deg );
 }
+
+/* for timeline */
+
+.timeline {
+    white-space:nowrap;
+    overflow-x: scroll;
+    padding:30px 0 0 0;
+    position:relative;
+}
+
+.entry {
+    display:inline-block;
+    vertical-align:top;
+    background:#13519C;
+    color:#fff;
+    padding:8px;
+    font-size:12px;
+    text-align:center;
+    position:relative;
+    border-top:4px solid #06182E;
+    border-radius:3px;
+    min-width:150px;
+    max-width:200px;
+    margin-left:4px;
+}
+
+.startentry {
+    display:inline-block;
+    vertical-align:top;
+    background:#13519C;
+    color:#fff;
+    padding:8px;
+    font-size:12px;
+    text-align:center;
+    position:relative;
+    border-top:4px solid #06182E;
+    border-radius:3px;
+    min-width:50px;
+    margin-left:4px;
+}
+.endentry {
+    display:inline-block;
+    vertical-align:top;
+    background:#13519C;
+    color:#fff;
+    padding:8px;
+    font-size:12px;
+    text-align:center;
+    position:relative;
+    border-top:4px solid #06182E;
+    border-radius:3px;
+    min-width:50px;
+    max-width:200px;
+    margin-left:4px;
+}
+
+.entry img {
+    display:block;
+    max-width:100%;
+    height:auto;
+    margin-bottom:10px;
+
+}
+
+.entry:after {
+    content:'';
+    display:block;
+    background:#eee;
+    width:7px;
+    height:7px;
+    border-radius:6px;
+    border:3px solid #06182E;
+    position:absolute;
+    left:50%;
+    top:-30px;
+    margin-left:-6px;
+}
+
+.entry:before {
+    content:'';
+    display:block;
+    background:#06182E;
+    width:5px;
+    height:20px;
+    position:absolute;
+    left:50%;
+    top:-20px;
+    margin-left:-2px;
+}
+
+.entry h1 {
+    color:#fff;
+    font-size:18px;
+    font-family:Georgia, serif;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.entry h2 {
+    letter-spacing:.2em;
+    margin-bottom:10px;
+    font-size:14px;
+}
+
+.bar {
+    height:4px;
+    background:#eee;
+    width:100%;
+    position:relative;
+    top:13px;
+    left:0;
+}
+
+/* for collapsibel Accordion  */
+.Collapsible {
+  background-color: white; }
+
+.Collapsible__contentInner {
+  padding: 10px;
+  border: 1px solid #ebebeb;
+  border-top: 0; }
+  .Collapsible__contentInner p {
+    margin-bottom: 10px;
+    font-size: 14px;
+    line-height: 20px; }
+    .Collapsible__contentInner p:last-child {
+      margin-bottom: 0; }
+
+.Collapsible__trigger {
+  display: block;
+  font-weight: 400;
+  text-decoration: none;
+  color: #333333;
+  position: relative;
+  border: 1px solid white;
+  padding: 10px;
+  background: #85144b;
+  color: white; }
+  .Collapsible__trigger:after {
+    font-family: 'FontAwesome';
+    content: '\f102';
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    display: block;
+    transition: transform 300ms; }
+  .Collapsible__trigger.is-open:after {
+    transform: rotateZ(180deg); }
