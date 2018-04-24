@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchPipelineRuns }  from '../actions';
+import { Link } from 'react-router-dom';
+
 var CONFIG = require("../constants/config")
 
 class PipelineRuns extends Component {
@@ -19,6 +21,7 @@ class PipelineRuns extends Component {
 
   renderPipelineRuns(){
     return _.map(this.props.pipelines.pipelineruns, pipelinerun => {
+      console.log(pipelinerun);
       return (
         <tr key={pipelinerun.id}>
           <td>
@@ -39,6 +42,9 @@ class PipelineRuns extends Component {
             {pipelinerun.result}
           </td>
           <td>
+            <button className="btn btn-default btn-sm">
+            <Link className="" to={`/pipelinetimeline/${pipelinerun.pipeline}/${pipelinerun.id}`}> Timeline </Link>
+            </button>
             <button className="btn btn-default btn-sm">
               Artifacts
             </button>

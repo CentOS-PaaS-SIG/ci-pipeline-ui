@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
 import ReactModal from 'react-modal';
-import { Link } from 'react-router-dom';
 import { fetchPipelineRunview }  from '../actions';
 import ArtifactsModal from './artifacts_modal';
 var CONFIG = require("../constants/config")
