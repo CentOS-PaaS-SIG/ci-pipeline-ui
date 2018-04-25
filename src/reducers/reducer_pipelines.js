@@ -10,11 +10,13 @@ import { FETCH_PIPELINE_JENKINSVIEW } from '../actions';
 import { FETCH_PIPELINE_VIEWS } from '../actions';
 import { FETCH_PIPELINE_VIEW_BY_NAME } from '../actions';
 import { FETCH_PIPELINE_RUN_NODES } from '../actions';
+import { FETCH_PIPELINE_RUN_NODE_STEPS } from '../actions';
 
 
 export default function(state = {}, action){
   switch (action.type){
-
+    case FETCH_PIPELINE_RUN_NODE_STEPS:
+      return { ...state, "pipelinenodesteps": action.payload.data }
     case FETCH_PIPELINE_VIEW_BY_NAME:
       return { ...state, "pipelineview": action.payload.data }
     case FETCH_PIPELINE_RUN_NODES:
