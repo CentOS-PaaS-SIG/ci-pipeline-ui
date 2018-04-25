@@ -11,10 +11,20 @@ export const FETCH_PIPELINE_VIEW_BY_NAME = 'fetch_pipeline_view_by_name';
 export const FETCH_PIPELINE_BY_NAME = 'fetch_pipeline_by_name';
 export const FETCH_PIPELINE_DETAIL = 'fetch_pipeline_detail';
 export const FETCH_PIPELINE_RUN_NODES = 'fetch_pipeline_run_nodes';
+export const FETCH_PIPELINE_RUN_NODE_STEPS = 'fetch_pipeline_run_node_steps';
+
 
 const HEADERS = {}
 var CONFIG = require("../constants/config")
 import axios from 'axios';
+
+export function fetchPipelineRunNodeSteps(name, runid, nodeid) {
+  const request = axios.get(`${CONFIG.getRESTURL()}/pipelines/${name}/runs/${runid}/nodes/${nodeid}/steps`);
+  return {
+    type: FETCH_PIPELINE_RUN_NODE_STEPS,
+    payload: request
+  };
+}
 
 export function fetchPipelineRunNodes(name, runid) {
   const request = axios.get(`${CONFIG.getRESTURL()}/pipelines/${name}/runs/${runid}/nodes`);
